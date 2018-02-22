@@ -2,4 +2,6 @@
     <string name="app_name">MiloNote</string>
     <string name="launch_tip">向左滑或向右滑进入设置界面</string>
     <string name="launch_button_text">开始</string>
+
+    <string name="first_page_new_note">新建便签</string>
 </resources>

@@ -3,4 +3,6 @@
     <dimen name="text_size_small">14dp</dimen>
     <dimen name="text_size">15dp</dimen>
     <dimen name="text_size_large">16dp</dimen>
+
+    <dimen name="text_font_size_largest">20sp</dimen>
 </resources>
