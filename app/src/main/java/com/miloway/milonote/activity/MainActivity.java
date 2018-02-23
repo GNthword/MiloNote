@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.miloway.milonote.R;
+import com.miloway.milonote.db.NotesProvider;
 import com.miloway.milonote.view.NoteGridView;
 
 public class MainActivity extends Activity {
@@ -36,4 +37,10 @@ public class MainActivity extends Activity {
 
     }
 
+
+    @Override
+    protected void onDestroy() {
+        NotesProvider.getInstance().onDestroy();
+        super.onDestroy();
+    }
 }

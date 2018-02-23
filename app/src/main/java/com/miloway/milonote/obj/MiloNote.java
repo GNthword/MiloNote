@@ -40,4 +40,83 @@ public class MiloNote {
     private String bgColor;
 
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
+    }
+
+    public long getPosition() {
+        return position;
+    }
+
+    public void setPosition(long position) {
+        this.position = position;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public String getPreviewContent() {
+        return previewContent;
+    }
+
+    public void setPreviewContent(String previewContent) {
+        this.previewContent = previewContent;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getAlertDate() {
+        return alertDate;
+    }
+
+    public void setAlertDate(String alertDate) {
+        this.alertDate = alertDate;
+    }
+
+    public String getBgColor() {
+        return bgColor;
+    }
+
+    public void setBgColor(String bgColor) {
+        this.bgColor = bgColor;
+    }
 }

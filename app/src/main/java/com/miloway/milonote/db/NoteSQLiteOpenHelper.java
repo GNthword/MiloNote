@@ -23,7 +23,7 @@ public class NoteSQLiteOpenHelper extends SQLiteOpenHelper {
          * 内容
          */
         String content = "CREATE TABLE note_content "
-                + "( id INTEGER PRIMARY KEY,"
+                + "( id INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + " parent_id INTEGER NOT NULL,"
                 + " position INTEGER NOT NULL,"
                 + " type TEXT NOT NULL,"    //文件夹 还是内容
@@ -32,7 +32,7 @@ public class NoteSQLiteOpenHelper extends SQLiteOpenHelper {
                 + " preview_content TEXT,"
                 + " content TEXT,"
                 + " alert_date TEXT,"
-                + " bg_color TEXT NOT NULL,"
+                + " bg_color TEXT DEFAULT yellow,"
                 + ")";
 
         sqLiteDatabase.execSQL(content);
