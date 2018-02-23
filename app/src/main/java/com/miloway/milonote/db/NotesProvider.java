@@ -9,6 +9,8 @@ import com.miloway.milonote.obj.MiloNote;
 import com.miloway.milonote.util.MiloConstants;
 import com.miloway.milonote.util.MiloUtil;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 /**
@@ -51,7 +53,8 @@ public class NotesProvider {
      */
     public void init(){
         String content = "INSERT INTO note_content values ("
-                + "'null',"
+                + "'0',"
+                + "0,"
                 + "0,"
                 + "'content',"
                 + "'" + MiloUtil.getCurrentFormatDate()+"',"
@@ -59,7 +62,7 @@ public class NotesProvider {
                 + "'This is a sample',"
                 + "'This is a sample',"
                 + "'null',"
-                + "'yellow',"
+                + "'yellow'"
                 + ")";
         database.execSQL(content);
     }
@@ -84,6 +87,7 @@ public class NotesProvider {
         if (!cursor.isClosed()){
             cursor.close();
         }
+        sortNotes(temp);
         return temp;
     }
 
@@ -103,6 +107,18 @@ public class NotesProvider {
         note.setAlertDate(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_ALERT_DATE));
         note.setBgColor(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_BG_COLOR));
         return note;
+    }
+
+    /**
+     * 排序
+     */
+    private void sortNotes(LinkedList<MiloNote> notes) {
+        Collections.sort(notes, new Comparator<MiloNote>() {
+            @Override
+            public int compare(MiloNote o1, MiloNote o2) {
+                return (int) (o1.getPosition() - o2.getPosition());
+            }
+        });
     }
 
 //    private class RunTask implements Runnable/*,Callable<Object>,Future<Object>*/{

@@ -32,7 +32,7 @@ public class NoteSQLiteOpenHelper extends SQLiteOpenHelper {
                 + " preview_content TEXT,"
                 + " content TEXT,"
                 + " alert_date TEXT,"
-                + " bg_color TEXT DEFAULT yellow,"
+                + " bg_color TEXT DEFAULT yellow"
                 + ")";
 
         sqLiteDatabase.execSQL(content);

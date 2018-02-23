@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="@dimen/grid_item_width"
+    android:layout_height="@dimen/grid_item_height"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/grid_yellow"
+        />
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_note_image_layout_margin_top"
+        >
+        <ImageView
+            android:id="@+id/iv_note_clip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0.66dip"
+            android:src="@drawable/grid_image_cover_clip"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_note_indicators"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal"
+        android:paddingRight="12dp"
+        android:paddingBottom="@dimen/grid_indicator_padding_bottom"
+        android:layout_alignParentBottom="true">
+        <ImageView
+            android:id="@+id/iv_alert_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/header_alert"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/note_preview_bottom_text_color"
+            android:textSize="@dimen/text_font_size_small"
+            tools:text="2018-02-24"
+            />
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_note_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/grid_note_content_margin_top"
+        android:layout_marginLeft="@dimen/grid_note_content_margin_left"
+        android:maxLines="@integer/grid_note_text_preview_lines"
+        android:layout_above="@id/ll_note_indicators"
+        android:layout_below="@id/rl_top"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_font_size_small"
+        tools:text="1.市民卡\n2.\n3.剃须刀\n4.鞋子\n四件套"
+        />
+
+
+</RelativeLayout>
