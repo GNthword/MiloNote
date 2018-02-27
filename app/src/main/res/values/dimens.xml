@@ -13,5 +13,7 @@
     <dimen name="grid_indicator_padding_bottom">12dp</dimen>
     <dimen name="grid_note_content_margin_top">1dp</dimen>
     <dimen name="grid_note_content_margin_left">10dp</dimen>
+    <dimen name="grid_folder_content_margin_top">-3dp</dimen>
+    <dimen name="grid_folder_title_margin_top">5dp</dimen>
 
 </resources>

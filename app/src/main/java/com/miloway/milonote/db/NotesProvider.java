@@ -116,6 +116,9 @@ public class NotesProvider {
         Collections.sort(notes, new Comparator<MiloNote>() {
             @Override
             public int compare(MiloNote o1, MiloNote o2) {
+                if (o1.getPosition() == o2.getPosition()){
+                    return 1;
+                }
                 return (int) (o1.getPosition() - o2.getPosition());
             }
         });

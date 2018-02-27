@@ -1,15 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="@dimen/grid_item_width"
-    android:layout_height="@dimen/grid_item_height"
-    >
+    android:layout_height="@dimen/grid_item_height">
     <ImageView
+        android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/grid_yellow"
+        android:src="@drawable/grid_folder_yellow"
         />
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <ImageView
+            android:id="@+id/iv_note_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/grid_folder_anchor"
+            android:visibility="visible"
+            />
+        <TextView
+            android:id="@+id/tv_note_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_font_size_small"
+            android:textColor="@color/note_preview_title_text_color"
+            android:layout_toRightOf="@+id/iv_note_icon"
+            android:layout_marginTop="@dimen/grid_folder_title_margin_top"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="title"
+            />
+
+    </RelativeLayout>
+    <include layout="@layout/note_item_bottom" />
+    <TextView
+        android:id="@+id/tv_note_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/grid_folder_content_margin_top"
+        android:layout_marginLeft="@dimen/grid_note_content_margin_left"
+        android:maxLines="@integer/grid_folder_text_preview_lines"
+        android:layout_above="@id/ll_note_indicators"
+        android:layout_below="@id/rl_top"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_font_size_small"
+        tools:text="1.市民卡\n2.\n3.剃须刀\n4.鞋子\n四件套"
+        />
+
 
 
 </RelativeLayout>
