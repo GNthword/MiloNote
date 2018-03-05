@@ -35,4 +35,9 @@ public class MiloUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
         return sdf.format(new Date());
     }
+
+    public static String getCurrentFormatDate(long time){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+        return sdf.format(new Date(time));
+    }
 }

@@ -21,15 +21,17 @@ public class MiloNote {
      */
     private String type;
     /**
-     * 日期
+     * 创建日期
      */
     private String createdDate;
+    /**
+     * 修改日期
+     */
     private String modifiedDate;
     /**
      * 预览
      */
     private String previewContent;
-    private String content;
     /**
      * 提醒日期
      */
@@ -38,6 +40,14 @@ public class MiloNote {
      * 背景色
      */
     private String bgColor;
+    /**
+     * 密码类型
+     */
+    private String passwordType;
+    /**
+     * 密码
+     */
+    private String password;
 
 
     public long getId() {
@@ -96,14 +106,6 @@ public class MiloNote {
         this.previewContent = previewContent;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getAlertDate() {
         return alertDate;
     }
@@ -118,5 +120,21 @@ public class MiloNote {
 
     public void setBgColor(String bgColor) {
         this.bgColor = bgColor;
+    }
+
+    public String getPasswordType() {
+        return passwordType;
+    }
+
+    public void setPasswordType(String passwordType) {
+        this.passwordType = passwordType;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

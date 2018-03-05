@@ -10,29 +10,26 @@ public class MiloConstants {
     /*
      * 便签内容类型
      */
-    public static String NOTE_CONTENT_TYPE_CONTENT = "content";
-    public static String NOTE_CONTENT_TYPE_FOLDER = "folder";
+    public static final String NOTE_CONTENT_TYPE_CONTENT = "content";
+    public static final String NOTE_CONTENT_TYPE_FOLDER = "folder";
     /*
-     * 便签背景色
+     * 最外层parent_id
      */
-    public static String NOTE_BACKGROUND_COLOR_BLUE = "blue";
-    public static String NOTE_BACKGROUND_COLOR_GREEN = "green";
-    public static String NOTE_BACKGROUND_COLOR_RED = "red";
-    public static String NOTE_BACKGROUND_COLOR_WHITE = "white";
-    public static String NOTE_BACKGROUND_COLOR_YELLOW = "yellow";
+    public static final int NOTE_FOLDER_PARENT_ID_TOP_LEVEL = 0;
     /*
      * columnIndex
      */
-    public static int NOTE_COLUMN_INDEX_ID = 0;
-    public static int NOTE_COLUMN_INDEX_PARENT_ID = 1;
-    public static int NOTE_COLUMN_INDEX_POSITION = 2;
-    public static int NOTE_COLUMN_INDEX_TYPE = 3;
-    public static int NOTE_COLUMN_INDEX_CREATE_DATE = 4;
-    public static int NOTE_COLUMN_INDEX_MODIFIED_DATE = 5;
-    public static int NOTE_COLUMN_INDEX_PREVIEW_CONTENT = 6;
-    public static int NOTE_COLUMN_INDEX_CONTENT = 7;
-    public static int NOTE_COLUMN_INDEX_ALERT_DATE = 8;
-    public static int NOTE_COLUMN_INDEX_BG_COLOR = 9;
-
+    public static final int NOTE_COLUMN_INDEX_ID = 0;
+    public static final int NOTE_COLUMN_INDEX_PARENT_ID = 1;
+    public static final int NOTE_COLUMN_INDEX_POSITION = 2;
+    public static final int NOTE_COLUMN_INDEX_TYPE = 3;
+    public static final int NOTE_COLUMN_INDEX_CREATE_DATE = 4;
+    public static final int NOTE_COLUMN_INDEX_MODIFIED_DATE = 5;
+    public static final int NOTE_COLUMN_INDEX_PREVIEW_CONTENT = 6;
+    public static final int NOTE_COLUMN_INDEX_ALERT_DATE = 7;
+    public static final int NOTE_COLUMN_INDEX_BG_COLOR = 8;
+    public static final int NOTE_COLUMN_INDEX_PASSWORD_TYPE = 9;
+    public static final int NOTE_COLUMN_INDEX_PASSWORD = 10;
+    public static final int NOTE_COLUMN_INDEX_CONTENT = 1;
 
 }

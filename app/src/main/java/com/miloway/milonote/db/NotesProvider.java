@@ -52,26 +52,33 @@ public class NotesProvider {
      * 初始化
      */
     public void init(){
+        long time = System.currentTimeMillis();
         String content = "INSERT INTO note_content values ("
-                + "'0',"
+                + "0,"
                 + "0,"
                 + "0,"
                 + "'content',"
-                + "'" + MiloUtil.getCurrentFormatDate()+"',"
-                + "'" +  MiloUtil.getCurrentFormatDate()+"',"
-                + "'This is a sample',"
+                + "" + time+","
+                + "" +  time+","
                 + "'This is a sample',"
                 + "'null',"
-                + "'yellow'"
+                + "'yellow',"
+                + "'none',"
+                + "'',"
+                + ")";
+        String content_detail = "INSERT INTO note_content_detail values ("
+                + "0,"
+                + "'This is a sample\n\n\n\n\nThis is a sample',"
                 + ")";
         database.execSQL(content);
+        database.execSQL(content_detail);
     }
 
     /**
      * 准备数据
      */
     public void prepareData(){
-        firstPageNotes = getData(0);
+        firstPageNotes = getData(MiloConstants.NOTE_FOLDER_PARENT_ID_TOP_LEVEL);
         cacheNotes = new LinkedList<MiloNote>();
     }
 
@@ -100,12 +107,13 @@ public class NotesProvider {
         note.setParentId(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_PARENT_ID));
         note.setPosition(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_POSITION));
         note.setType(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_TYPE));
-        note.setCreatedDate(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_CREATE_DATE));
-        note.setModifiedDate(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_MODIFIED_DATE));
+        note.setCreatedDate(MiloUtil.getCurrentFormatDate(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_CREATE_DATE)));
+        note.setModifiedDate(MiloUtil.getCurrentFormatDate(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_MODIFIED_DATE)));
         note.setPreviewContent(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_PREVIEW_CONTENT));
-        note.setContent(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_CONTENT));
-        note.setAlertDate(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_ALERT_DATE));
+        note.setAlertDate(MiloUtil.getCurrentFormatDate(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_ALERT_DATE)));
         note.setBgColor(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_BG_COLOR));
+        note.setPasswordType(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_PASSWORD_TYPE));
+        note.setPassword(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_PASSWORD));
         return note;
     }
 

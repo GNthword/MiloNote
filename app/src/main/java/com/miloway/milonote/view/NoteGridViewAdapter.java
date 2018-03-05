@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.miloway.milonote.R;
 import com.miloway.milonote.db.NotesProvider;
 import com.miloway.milonote.obj.MiloNote;
+import com.miloway.milonote.util.BackgroundTool;
 import com.miloway.milonote.util.MiloConstants;
 
 import java.util.LinkedList;
@@ -69,7 +70,7 @@ public class NoteGridViewAdapter extends BaseAdapter {
      */
     @Override
     public int getItemViewType(int position) {
-        if (notes.get(position).getType() == MiloConstants.NOTE_CONTENT_TYPE_CONTENT){
+        if (MiloConstants.NOTE_CONTENT_TYPE_CONTENT.equals(notes.get(position).getType())){
             return 1;
         }
         return 0;
@@ -79,13 +80,28 @@ public class NoteGridViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         MiloNote note = notes.get(position);
+        String type = notes.get(position).getType();
         if (convertView == null){
             viewHolder = new ViewHolder();
-            if (note.getType() == MiloConstants.NOTE_CONTENT_TYPE_CONTENT) {
+            if (MiloConstants.NOTE_CONTENT_TYPE_CONTENT.equals(type)) {
                 convertView = inflater.inflate(R.layout.note_item_content, null);
             }else {
                 convertView = inflater.inflate(R.layout.note_item_folder, null);
             }
+            viewHolder.ivBackground = convertView.findViewById(R.id.iv_background);
+            viewHolder.ivNoteIcon = convertView.findViewById(R.id.iv_note_icon);
+            viewHolder.tvNoteTitle = convertView.findViewById(R.id.tv_note_title);
+            viewHolder.tvNoteContent = convertView.findViewById(R.id.tv_note_content);
+            viewHolder.ivAlertIcon = convertView.findViewById(R.id.iv_alert_icon);
+            viewHolder.tvTime = convertView.findViewById(R.id.tv_time);
+            convertView.setTag(viewHolder);
+        }else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+        int resId = BackgroundTool.getBackgroundResourceIdByType(note.getType(),note.getBgColor());
+        viewHolder.ivBackground.setImageResource(resId);
+        if (MiloConstants.NOTE_CONTENT_TYPE_CONTENT.equals(type)){
+
         }
 
 

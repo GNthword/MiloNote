@@ -27,15 +27,25 @@ public class NoteSQLiteOpenHelper extends SQLiteOpenHelper {
                 + " parent_id INTEGER NOT NULL,"
                 + " position INTEGER NOT NULL,"
                 + " type TEXT NOT NULL,"    //文件夹 还是内容
-                + " created_date TEXT NOT NULL,"
-                + " modified_date TEXT NOT NULL,"
+                + " created_date INTEGER NOT NULL,"
+                + " modified_date INTEGER NOT NULL,"
                 + " preview_content TEXT,"
+                + " alert_date INTEGER,"
+                + " bg_color TEXT DEFAULT yellow,"
+                + " password_type TEXT DEFAULT none,"
+                + " password TEXT,"
+                + ")";
+
+        /*
+         * 内容详细
+         */
+        String detail = "CREATE TABLE note_content_detail "
+                + "( id INTEGER PRIMARY KEY ,"
                 + " content TEXT,"
-                + " alert_date TEXT,"
-                + " bg_color TEXT DEFAULT yellow"
                 + ")";
 
         sqLiteDatabase.execSQL(content);
+        sqLiteDatabase.execSQL(detail);
         /*
          * json方式
          */
