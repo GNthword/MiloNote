@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/header_alert"
         android:visibility="invisible"
+        android:contentDescription="@null"
         />
     <TextView
         android:id="@+id/tv_time"

@@ -22,6 +22,5 @@ public class NoteGridView extends GridView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
     }
 }

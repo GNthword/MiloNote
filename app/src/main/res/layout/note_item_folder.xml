@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/grid_folder_background_yellow"
+        android:contentDescription="@null"
         />
     <RelativeLayout
         android:id="@+id/rl_top"
@@ -22,6 +23,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/grid_folder_anchor"
             android:visibility="visible"
+            android:contentDescription="@null"
             />
         <TextView
             android:id="@+id/tv_note_title"

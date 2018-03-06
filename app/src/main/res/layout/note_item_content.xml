@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/grid_background_yellow"
+        android:contentDescription="@null"
         />
     <RelativeLayout
         android:id="@+id/rl_top"
@@ -25,6 +26,7 @@
             android:layout_marginLeft="0.66dip"
             android:src="@drawable/grid_image_cover_clip"
             android:visibility="gone"
+            android:contentDescription="@null"
             />
 
     </RelativeLayout>
