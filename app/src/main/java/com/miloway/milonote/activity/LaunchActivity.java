@@ -3,11 +3,16 @@ package com.miloway.milonote.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.WindowManager;
 
 import com.miloway.milonote.R;
+import com.miloway.milonote.android.MiloToast;
 import com.miloway.milonote.db.NotesProvider;
 import com.miloway.milonote.util.SPTool;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by miloway on 2018/2/8.
@@ -23,7 +28,13 @@ public class LaunchActivity extends Activity{
 
         init();
         prepareData();
-        next();
+        //next();
+        new Timer("xx").schedule(new TimerTask() {
+            @Override
+            public void run() {
+              MiloToast.makeText(LaunchActivity.this,"123456").show();
+            }
+        },3000);
     }
 
     private void init(){

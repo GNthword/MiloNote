@@ -33,7 +33,7 @@ public class NoteSQLiteOpenHelper extends SQLiteOpenHelper {
                 + " alert_date INTEGER,"
                 + " bg_color TEXT DEFAULT yellow,"
                 + " password_type TEXT DEFAULT none,"
-                + " password TEXT,"
+                + " password TEXT"
                 + ")";
 
         /*
@@ -41,7 +41,7 @@ public class NoteSQLiteOpenHelper extends SQLiteOpenHelper {
          */
         String detail = "CREATE TABLE note_content_detail "
                 + "( id INTEGER PRIMARY KEY ,"
-                + " content TEXT,"
+                + " content TEXT"
                 + ")";
 
         sqLiteDatabase.execSQL(content);

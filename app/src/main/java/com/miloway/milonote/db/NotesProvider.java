@@ -64,11 +64,11 @@ public class NotesProvider {
                 + "'null',"
                 + "'yellow',"
                 + "'none',"
-                + "'',"
+                + "''"
                 + ")";
         String content_detail = "INSERT INTO note_content_detail values ("
                 + "0,"
-                + "'This is a sample\n\n\n\n\nThis is a sample',"
+                + "'This is a sample\n\n\n\n\nThis is a sample'"
                 + ")";
         database.execSQL(content);
         database.execSQL(content_detail);

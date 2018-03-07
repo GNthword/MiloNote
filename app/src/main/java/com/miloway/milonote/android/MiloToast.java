@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.miloway.milonote.R;
 
 /**
  * Created by miloway on 2018/3/6.
@@ -40,17 +43,27 @@ public class MiloToast {
 
     private WindowManager.LayoutParams params;
 
-    private MiloToast(Context context, String text, int gravity) {
+    private final int OFFSET = 50;
+
+    private MiloToast(Context context, String text, int duration, int gravity) {
         LayoutInflater inflate = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflate.inflate(com.android.internal.R.layout.transient_notification, null);
-        TextView tv = (TextView)view.findViewById(com.android.internal.R.id.message);
+        view = inflate.inflate(R.layout.toast_layout, null);
+        TextView tv = (TextView)view.findViewById(R.id.message);
         tv.setText(text);
+
+        this.duration = duration;
         this.gravity = gravity;
         mWM = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        mWM.getDefaultDisplay().getMetrics(dm);
         params = new WindowManager.LayoutParams();
         params.gravity = gravity;
         params.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.windowAnimations = R.style.AppTheme;
+        params.y = (int) (dm.density * OFFSET);
     }
 
 
@@ -68,11 +81,10 @@ public class MiloToast {
             return null;
         }
         if (toast == null) {
-            toast = new MiloToast(context, text, gravity);
+            toast = new MiloToast(context, text, duration, gravity);
         }else {
             toast.cancel();
         }
-
 
         return toast;
     }
@@ -105,7 +117,7 @@ public class MiloToast {
         }
     }
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
