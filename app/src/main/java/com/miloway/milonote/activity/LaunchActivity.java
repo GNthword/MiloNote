@@ -28,13 +28,13 @@ public class LaunchActivity extends Activity{
 
         init();
         prepareData();
-        //next();
-        new Timer("xx").schedule(new TimerTask() {
-            @Override
-            public void run() {
-              MiloToast.makeText(LaunchActivity.this,"123456").show();
-            }
-        },3000);
+        next();
+//        new Timer("xx").schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//              MiloToast.makeText(LaunchActivity.this,"123456").show();
+//            }
+//        },3000);
     }
 
     private void init(){
