@@ -29,8 +29,9 @@ public class NoteSQLiteOpenHelper extends SQLiteOpenHelper {
                 + " type TEXT NOT NULL,"    //文件夹 还是内容
                 + " created_date INTEGER NOT NULL,"
                 + " modified_date INTEGER NOT NULL,"
+                + " title TEXT,"
                 + " preview_content TEXT,"
-                + " alert_date INTEGER,"
+                + " alert_date INTEGER DEFAULT -1,"
                 + " bg_color TEXT DEFAULT yellow,"
                 + " password_type TEXT DEFAULT none,"
                 + " password TEXT"

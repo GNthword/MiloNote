@@ -60,8 +60,9 @@ public class NotesProvider {
                 + "'content',"
                 + "" + time+","
                 + "" +  time+","
+                + "'',"
                 + "'This is a sample',"
-                + "'null',"
+                + "-1,"
                 + "'yellow',"
                 + "'none',"
                 + "''"
@@ -87,6 +88,7 @@ public class NotesProvider {
         String sql = "SELECT * FROM note_content where parent_id = "+parentId;
         Cursor cursor = database.rawQuery(sql,null);
         if (cursor.moveToFirst()){
+            temp.add(getObject(cursor));
             while (cursor.moveToNext()){
                 temp.add(getObject(cursor));
             }
@@ -107,10 +109,11 @@ public class NotesProvider {
         note.setParentId(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_PARENT_ID));
         note.setPosition(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_POSITION));
         note.setType(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_TYPE));
-        note.setCreatedDate(MiloUtil.getCurrentFormatDate(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_CREATE_DATE)));
-        note.setModifiedDate(MiloUtil.getCurrentFormatDate(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_MODIFIED_DATE)));
+        note.setCreatedDate(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_CREATE_DATE));
+        note.setModifiedDate(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_MODIFIED_DATE));
         note.setPreviewContent(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_PREVIEW_CONTENT));
-        note.setAlertDate(MiloUtil.getCurrentFormatDate(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_ALERT_DATE)));
+        note.setTitle(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_TITLE));
+        note.setAlertDate(cursor.getLong(MiloConstants.NOTE_COLUMN_INDEX_ALERT_DATE));
         note.setBgColor(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_BG_COLOR));
         note.setPasswordType(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_PASSWORD_TYPE));
         note.setPassword(cursor.getString(MiloConstants.NOTE_COLUMN_INDEX_PASSWORD));

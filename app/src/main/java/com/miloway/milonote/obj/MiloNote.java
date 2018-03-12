@@ -23,11 +23,15 @@ public class MiloNote {
     /**
      * 创建日期
      */
-    private String createdDate;
+    private long createdDate;
     /**
      * 修改日期
      */
-    private String modifiedDate;
+    private long modifiedDate;
+    /**
+     * 标题
+     */
+    private String title;
     /**
      * 预览
      */
@@ -35,7 +39,7 @@ public class MiloNote {
     /**
      * 提醒日期
      */
-    private String alertDate;
+    private long alertDate;
     /**
      * 背景色
      */
@@ -82,19 +86,19 @@ public class MiloNote {
         this.type = type;
     }
 
-    public String getCreatedDate() {
+    public long getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(long createdDate) {
         this.createdDate = createdDate;
     }
 
-    public String getModifiedDate() {
+    public long getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(String modifiedDate) {
+    public void setModifiedDate(long modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
@@ -106,11 +110,11 @@ public class MiloNote {
         this.previewContent = previewContent;
     }
 
-    public String getAlertDate() {
+    public long getAlertDate() {
         return alertDate;
     }
 
-    public void setAlertDate(String alertDate) {
+    public void setAlertDate(long alertDate) {
         this.alertDate = alertDate;
     }
 
@@ -136,5 +140,13 @@ public class MiloNote {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

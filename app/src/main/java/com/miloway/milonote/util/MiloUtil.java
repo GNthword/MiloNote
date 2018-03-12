@@ -5,14 +5,9 @@ import android.content.pm.ApplicationInfo;
 import com.miloway.milonote.android.MiloApplication;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.LongAdder;
 
 /**
  * Created by miloway on 2018/2/22.
@@ -21,6 +16,14 @@ import java.util.concurrent.atomic.LongAdder;
 
 public class MiloUtil {
 
+    /*
+     * in JDK8 use
+     *      LongAdder for AtomicInteger
+     *      Instant.now() for new Date()
+     *      LocalDateTime fot Calendar
+     *      DateTimeFormatter for SimpleDateFormat
+     */
+
     public MiloUtil() {}
 
 
@@ -28,6 +31,7 @@ public class MiloUtil {
         if ( 0 != (MiloApplication.getMiloApplication().getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE)) {
             return true;
         }
+
         return false;
     }
 
@@ -36,8 +40,45 @@ public class MiloUtil {
         return sdf.format(new Date());
     }
 
-    public static String getCurrentFormatDate(long time){
+    public static String getFormatDate(long time){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
         return sdf.format(new Date(time));
+    }
+
+    public static String getFormatDatePreview(long time) {
+        if (time < 0) {
+            return "";
+        }
+        SimpleDateFormat sdf;
+        if (checkThisYear(time)) {
+            sdf = new SimpleDateFormat("MM-dd",Locale.CHINA);
+        }else {
+            sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINA);
+        }
+        return sdf.format(new Date(time));
+    }
+
+    public static String getFormatDateFull(long time) {
+        if (time < 0) {
+            return "";
+        }
+        SimpleDateFormat sdf;
+        if (checkThisYear(time)) {
+            sdf = new SimpleDateFormat("MM-dd HH:mm:ss",Locale.CHINA);
+        }else {
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINA);
+        }
+        return sdf.format(new Date(time));
+    }
+
+    /**
+     * 校验年份 是否今年
+     */
+    private static boolean checkThisYear(long time){
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        calendar.setTime(new Date(time));
+        int year = calendar.get(Calendar.YEAR);
+        return currentYear == year;
     }
 }

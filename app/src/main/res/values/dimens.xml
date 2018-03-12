@@ -10,10 +10,12 @@
     <dimen name="grid_item_width">153.33dp</dimen>
     <dimen name="grid_item_height">149.33dp</dimen>
     <dimen name="grid_note_image_layout_margin_top">9dp</dimen>
-    <dimen name="grid_indicator_padding_bottom">12dp</dimen>
-    <dimen name="grid_note_content_margin_top">1dp</dimen>
+    <dimen name="grid_indicator_padding_right">16dp</dimen>
+    <dimen name="grid_indicator_padding_bottom">16dp</dimen>
+    <dimen name="grid_note_content_margin_top">10dp</dimen>
     <dimen name="grid_note_content_margin_left">10dp</dimen>
-    <dimen name="grid_folder_content_margin_top">-3dp</dimen>
+    <dimen name="grid_note_content_margin_right">10dp</dimen>
+    <dimen name="grid_folder_content_margin_top">-4dp</dimen>
     <dimen name="grid_folder_title_margin_top">5dp</dimen>
 
 </resources>

@@ -16,6 +16,7 @@ public class MiloConstants {
      * 最外层parent_id
      */
     public static final int NOTE_FOLDER_PARENT_ID_TOP_LEVEL = 0;
+    public static final long NOTE_ALERT_TIME_DEFAULT_VALUE = -1;
     /*
      * columnIndex
      */
@@ -25,11 +26,12 @@ public class MiloConstants {
     public static final int NOTE_COLUMN_INDEX_TYPE = 3;
     public static final int NOTE_COLUMN_INDEX_CREATE_DATE = 4;
     public static final int NOTE_COLUMN_INDEX_MODIFIED_DATE = 5;
-    public static final int NOTE_COLUMN_INDEX_PREVIEW_CONTENT = 6;
-    public static final int NOTE_COLUMN_INDEX_ALERT_DATE = 7;
-    public static final int NOTE_COLUMN_INDEX_BG_COLOR = 8;
-    public static final int NOTE_COLUMN_INDEX_PASSWORD_TYPE = 9;
-    public static final int NOTE_COLUMN_INDEX_PASSWORD = 10;
+    public static final int NOTE_COLUMN_INDEX_TITLE = 6;
+    public static final int NOTE_COLUMN_INDEX_PREVIEW_CONTENT = 7;
+    public static final int NOTE_COLUMN_INDEX_ALERT_DATE = 8;
+    public static final int NOTE_COLUMN_INDEX_BG_COLOR = 9;
+    public static final int NOTE_COLUMN_INDEX_PASSWORD_TYPE = 10;
+    public static final int NOTE_COLUMN_INDEX_PASSWORD = 11;
     public static final int NOTE_COLUMN_INDEX_CONTENT = 1;
 
 }

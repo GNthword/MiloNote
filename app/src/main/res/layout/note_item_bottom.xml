@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="right|center_vertical"
     android:orientation="horizontal"
-    android:paddingRight="12dp"
+    android:paddingRight="16dp"
     android:paddingBottom="@dimen/grid_indicator_padding_bottom"
     android:layout_alignParentBottom="true">
 

@@ -13,6 +13,7 @@ import com.miloway.milonote.db.NotesProvider;
 import com.miloway.milonote.obj.MiloNote;
 import com.miloway.milonote.util.BackgroundTool;
 import com.miloway.milonote.util.MiloConstants;
+import com.miloway.milonote.util.MiloUtil;
 
 import java.util.LinkedList;
 
@@ -101,11 +102,27 @@ public class NoteGridViewAdapter extends BaseAdapter {
         int resId = BackgroundTool.getBackgroundResourceIdByType(note.getType(),note.getBgColor());
         viewHolder.ivBackground.setImageResource(resId);
         if (MiloConstants.NOTE_CONTENT_TYPE_CONTENT.equals(type)){
-
+            viewHolder.ivNoteIcon.setVisibility(View.GONE);
+            if (MiloConstants.NOTE_ALERT_TIME_DEFAULT_VALUE == note.getAlertDate()){
+                viewHolder.ivAlertIcon.setVisibility(View.INVISIBLE);
+            }else {
+                viewHolder.ivAlertIcon.setVisibility(View.VISIBLE);
+            }
+        }else {
+            viewHolder.ivNoteIcon.setVisibility(View.VISIBLE);
+            viewHolder.ivAlertIcon.setVisibility(View.GONE);
         }
+        setItemData(viewHolder, note);
 
+        return convertView;
+    }
 
-        return null;
+    private void setItemData(ViewHolder viewHolder, MiloNote note) {
+        if (MiloConstants.NOTE_CONTENT_TYPE_FOLDER.equals(note.getType())) {
+            viewHolder.tvNoteTitle.setText(note.getTitle());
+        }
+        viewHolder.tvNoteContent.setText(note.getPreviewContent());
+        viewHolder.tvTime.setText(MiloUtil.getFormatDatePreview(note.getModifiedDate()));
     }
 
     private class ViewHolder {
