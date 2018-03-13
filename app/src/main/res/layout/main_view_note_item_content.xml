@@ -38,7 +38,7 @@
         android:layout_height="@dimen/grid_item_height">
 
         <include
-            layout="@layout/note_item_bottom"
+            layout="@layout/main_view_note_item_bottom"
             />
 
         <TextView

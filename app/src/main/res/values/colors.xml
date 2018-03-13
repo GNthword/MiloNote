@@ -11,4 +11,15 @@
     <color name="primary_text">#FF000000</color>
     <color name="note_preview_bottom_text_color">#50000000</color>
     <color name="note_preview_title_text_color">#50000000</color>
+
+
+    <color name="note_edit_view_title_bar_bg_blue">#FFBFE2F5</color>
+    <color name="note_edit_view_title_bar_bg_green">#FFE6F398</color>
+    <color name="note_edit_view_title_bar_bg_red">#FFF9D2D2</color>
+    <color name="note_edit_view_title_bar_bg_white">#FFE4E4E4</color>
+    <color name="note_edit_view_title_bar_bg_yellow">#FFF7D66C</color>
+
+    <color name="note_edit_view_title_text_color">#FF2E2E2E</color>
+    <!--<color name="note_edit_view_title_item_press_bg">#FFE7C65C</color>-->
+    <color name="note_edit_view_title_item_press_bg">#33000000</color>
 </resources>

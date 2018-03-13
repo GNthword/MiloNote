@@ -1,6 +1,7 @@
 package com.miloway.milonote.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.miloway.milonote.R;
+import com.miloway.milonote.activity.MainActivity;
+import com.miloway.milonote.activity.NoteEditActivity;
 import com.miloway.milonote.db.NotesProvider;
 import com.miloway.milonote.obj.MiloNote;
 import com.miloway.milonote.util.MiloConstants;
@@ -23,6 +26,8 @@ public class MainView extends RelativeLayout implements AdapterView.OnItemClickL
     private LinearLayout llNewNote;
     private NoteGridView noteGridView;
     private NoteGridViewAdapter adapter;
+
+    private ActivityEventListener listener;
 
     public MainView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -77,7 +82,17 @@ public class MainView extends RelativeLayout implements AdapterView.OnItemClickL
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.ll_new_note) {
-
+            if (listener != null) {
+                listener.gotoNewNoteEdit();
+            }
         }
+    }
+
+    public void setListener(ActivityEventListener listener) {
+        this.listener = listener;
+    }
+
+    public interface ActivityEventListener {
+        void gotoNewNoteEdit();
     }
 }

@@ -14,7 +14,7 @@
         android:id="@+id/iv_alert_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/header_alert"
+        android:src="@drawable/alarm_clock"
         android:visibility="invisible"
         android:contentDescription="@null"
         />

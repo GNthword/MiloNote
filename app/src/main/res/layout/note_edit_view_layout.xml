@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.miloway.milonote.view.NoteEditView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/rl_title"
+        layout="@layout/note_edit_title_view_layout" />
+
+    <com.miloway.milonote.view.RichEditView
+        android:id="@+id/rich_edit_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_title"
+        android:paddingTop="@dimen/edit_view_rich_edit_view_padding_top"
+        android:text="123\n斯巴达克斯斯巴达克斯斯巴达克斯斯，巴，达克斯斯巴达克斯"
+        android:textColor="@color/black"
+        android:gravity="top|start"
+        />
+
+</com.miloway.milonote.view.NoteEditView>

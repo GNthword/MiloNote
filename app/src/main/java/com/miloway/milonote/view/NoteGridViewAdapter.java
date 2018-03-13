@@ -85,9 +85,9 @@ public class NoteGridViewAdapter extends BaseAdapter {
         if (convertView == null){
             viewHolder = new ViewHolder();
             if (MiloConstants.NOTE_CONTENT_TYPE_CONTENT.equals(type)) {
-                convertView = inflater.inflate(R.layout.note_item_content, null);
+                convertView = inflater.inflate(R.layout.main_view_note_item_content, null);
             }else {
-                convertView = inflater.inflate(R.layout.note_item_folder, null);
+                convertView = inflater.inflate(R.layout.main_view_note_item_folder, null);
             }
             viewHolder.ivBackground = convertView.findViewById(R.id.iv_background);
             viewHolder.ivNoteIcon = convertView.findViewById(R.id.iv_note_icon);
