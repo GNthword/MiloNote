@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.miloway.milonote.R;
 import com.miloway.milonote.db.NotesProvider;
+import com.miloway.milonote.listener.MainViewEventListener;
 import com.miloway.milonote.view.MainView;
 
-public class MainActivity extends Activity implements MainView.ActivityEventListener {
+public class MainActivity extends Activity implements MainViewEventListener {
 
     private MainView mainView;
 

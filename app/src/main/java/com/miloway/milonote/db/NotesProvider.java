@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.miloway.milonote.android.MiloApplication;
 import com.miloway.milonote.obj.MiloNote;
 import com.miloway.milonote.util.MiloConstants;
-import com.miloway.milonote.util.MiloUtil;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,7 +20,6 @@ public class NotesProvider {
 
     private SQLiteDatabase database;
     private static NotesProvider provider = new NotesProvider();
-    private Context context;
 
     /*
      * 数据结构
@@ -39,8 +37,7 @@ public class NotesProvider {
     private LinkedList<MiloNote> cacheNotes;
 
     private NotesProvider(){
-        context = MiloApplication.getMiloApplication();
-        NoteSQLiteOpenHelper helper = new NoteSQLiteOpenHelper(context);
+        NoteSQLiteOpenHelper helper = new NoteSQLiteOpenHelper(MiloApplication.getMiloApplication());
         database = helper.getWritableDatabase();
     }
 
@@ -167,7 +164,6 @@ public class NotesProvider {
         firstPageNotes = null;
         cacheNotes = null;
         cacheParentId = 0;
-        context = null;
     }
 
 }

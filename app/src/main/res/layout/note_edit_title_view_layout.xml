@@ -18,6 +18,7 @@
         android:background="@drawable/edit_view_title_bar_selector"
         />
     <TextView
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_font_size_small"

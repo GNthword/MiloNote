@@ -12,6 +12,7 @@ import com.miloway.milonote.R;
 import com.miloway.milonote.activity.MainActivity;
 import com.miloway.milonote.activity.NoteEditActivity;
 import com.miloway.milonote.db.NotesProvider;
+import com.miloway.milonote.listener.MainViewEventListener;
 import com.miloway.milonote.obj.MiloNote;
 import com.miloway.milonote.util.MiloConstants;
 
@@ -27,7 +28,7 @@ public class MainView extends RelativeLayout implements AdapterView.OnItemClickL
     private NoteGridView noteGridView;
     private NoteGridViewAdapter adapter;
 
-    private ActivityEventListener listener;
+    private MainViewEventListener listener;
 
     public MainView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -88,11 +89,8 @@ public class MainView extends RelativeLayout implements AdapterView.OnItemClickL
         }
     }
 
-    public void setListener(ActivityEventListener listener) {
+    public void setListener(MainViewEventListener listener) {
         this.listener = listener;
     }
 
-    public interface ActivityEventListener {
-        void gotoNewNoteEdit();
-    }
 }
