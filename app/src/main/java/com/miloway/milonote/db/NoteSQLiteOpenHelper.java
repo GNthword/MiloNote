@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class NoteSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static String DATABASE_NAME = "milo_note.db";
-    private static int DATABASE_VERSION = 1;
+    private static int DATABASE_VERSION = 2;
 
     public NoteSQLiteOpenHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -45,8 +45,41 @@ public class NoteSQLiteOpenHelper extends SQLiteOpenHelper {
                 + " content TEXT"
                 + ")";
 
+        /*
+         * 统计
+         *  只有一列数据
+         */
+        String statistics = "CREATE TABLE statistics "
+                + "( id INTEGER PRIMARY KEY ,"
+                + " start_time INTEGER NOT NULL,"
+                + " create_all INTEGER NOT NULL,"
+                + " delete_all INTEGER NOT NULL"
+                + ")";
+
+        /*
+         * 统计详细
+         *  time:time
+         *  type:operation create、modify、delete
+         */
+        String statistics_detail = "CREATE TABLE statistics_detail "
+                + "( id INTEGER PRIMARY KEY ,"
+                + " time INTEGER NOT NULL,"
+                + " type TEXT NOT NULL"
+                + ")";
+
+        /*
+         * 触发器
+         * 暂不使用
+         */
+        String statistics_trigger = "CREATE TRIGGER statistics_trigger AFTER INSERT ON note_content \n"
+                + "BEGIN\n"
+                + " INSERT INTO statistics_detail VALUES(null, new.created_date, 'create')"
+                + "END;";
+
         sqLiteDatabase.execSQL(content);
         sqLiteDatabase.execSQL(detail);
+        sqLiteDatabase.execSQL(statistics);
+        sqLiteDatabase.execSQL(statistics_detail);
         /*
          * json方式
          */

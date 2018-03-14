@@ -34,4 +34,9 @@ public class MiloConstants {
     public static final int NOTE_COLUMN_INDEX_PASSWORD = 11;
     public static final int NOTE_COLUMN_INDEX_CONTENT = 1;
 
+    /*
+     * 便签对象传递name
+     */
+    public static final String NOTE_OBJECT_SERIALIZE_KEY = "milo_note";
+
 }

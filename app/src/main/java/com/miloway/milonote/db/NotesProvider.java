@@ -6,10 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.miloway.milonote.android.MiloApplication;
 import com.miloway.milonote.obj.MiloNote;
+import com.miloway.milonote.util.BackgroundTool;
 import com.miloway.milonote.util.MiloConstants;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -151,6 +153,65 @@ public class NotesProvider {
         cacheParentId = parentId;
         cacheNotes = getData(parentId);
         return cacheNotes;
+    }
+
+    /**
+     * 生成一个新的MiloNote对象<br/>
+     * 不会设置id、parent_id、position 和 modifiedDate
+     */
+    public MiloNote newNote(long parentId){
+        return newNote(parentId, MiloConstants.NOTE_CONTENT_TYPE_CONTENT);
+    }
+
+    /**
+     * 生成一个新的MiloNote对象<br/>
+     * 不会设置id、parent_id、position 和 modifiedDate
+     */
+    public MiloNote newNote(long parentId, String type){
+        MiloNote note = new MiloNote();
+        long time = System.currentTimeMillis();
+        note.setParentId(parentId);
+        note.setType(type);
+        note.setCreatedDate(time);
+        //note.setModifiedDate(time);
+        note.setPreviewContent(null);
+        note.setTitle("");
+        note.setAlertDate(MiloConstants.NOTE_ALERT_TIME_DEFAULT_VALUE);
+        note.setBgColor(BackgroundTool.NOTE_BACKGROUND_COLOR_YELLOW);
+        note.setPasswordType("");
+        note.setPassword("");
+        return note;
+    }
+
+    /**
+     * 是否新建的便签
+     */
+    public boolean isNewNote(MiloNote note) {
+        if (note != null) {
+            //允许空字符串，但为null 则认为是新建的
+            if (note.getPreviewContent() == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 保存便签
+     *  1. isNewNote 为false
+     *  2.
+     */
+    public boolean saveNote(MiloNote note) {
+        if (note == null) {
+            return false;
+        }
+        if (isNewNote(note)){
+            return false;
+        }
+
+
+
+        return true;
     }
 
 

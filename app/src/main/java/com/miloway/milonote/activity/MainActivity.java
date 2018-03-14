@@ -6,6 +6,8 @@ import android.os.Bundle;
 import com.miloway.milonote.R;
 import com.miloway.milonote.db.NotesProvider;
 import com.miloway.milonote.listener.MainViewEventListener;
+import com.miloway.milonote.obj.MiloNote;
+import com.miloway.milonote.util.MiloConstants;
 import com.miloway.milonote.view.MainView;
 
 public class MainActivity extends Activity implements MainViewEventListener {
@@ -29,8 +31,14 @@ public class MainActivity extends Activity implements MainViewEventListener {
     }
 
     @Override
-    public void gotoNewNoteEdit() {
+    public void gotoNoteEdit(long parentId) {
+        gotoNoteEdit(NotesProvider.getInstance().newNote(parentId));
+    }
+
+    @Override
+    public void gotoNoteEdit(MiloNote note) {
         Intent intent = new Intent(MainActivity.this, NoteEditActivity.class);
+        intent.putExtra(MiloConstants.NOTE_OBJECT_SERIALIZE_KEY,note);
         startActivity(intent);
     }
 }

@@ -30,6 +30,8 @@ public class MainView extends RelativeLayout implements AdapterView.OnItemClickL
 
     private MainViewEventListener listener;
 
+    private long currentParentId = MiloConstants.NOTE_FOLDER_PARENT_ID_TOP_LEVEL;
+
     public MainView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -84,7 +86,7 @@ public class MainView extends RelativeLayout implements AdapterView.OnItemClickL
         int id = v.getId();
         if (id == R.id.ll_new_note) {
             if (listener != null) {
-                listener.gotoNewNoteEdit();
+                listener.gotoNoteEdit(currentParentId);
             }
         }
     }

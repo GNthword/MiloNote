@@ -1,11 +1,14 @@
 package com.miloway.milonote.obj;
 
+import java.io.Serializable;
+
 /**
  * Created by miloway on 2018/2/22.
  * 实体类
  */
 
-public class MiloNote {
+public class MiloNote implements Serializable{
+
 
     private long id;
     /**
@@ -21,11 +24,15 @@ public class MiloNote {
      */
     private String type;
     /**
-     * 创建日期
+     * 创建日期<br/>
+     * 新建便签的时间，不管便签是否最终被保存
+     * @see System#currentTimeMillis()
      */
     private long createdDate;
     /**
-     * 修改日期
+     * 修改日期<br/>
+     * 保存便签的时间，通常在一开始就和创建日期不同
+     * @see System#currentTimeMillis()
      */
     private long modifiedDate;
     /**
