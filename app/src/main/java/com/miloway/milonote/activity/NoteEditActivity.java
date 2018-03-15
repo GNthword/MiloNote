@@ -9,8 +9,7 @@ import com.miloway.milonote.db.NotesProvider;
 import com.miloway.milonote.listener.NoteEditEventListener;
 import com.miloway.milonote.obj.MiloNote;
 import com.miloway.milonote.util.MiloConstants;
-import com.miloway.milonote.view.NoteEditTitleView;
-import com.miloway.milonote.view.RichEditView;
+import com.miloway.milonote.view.NoteEditView;
 
 /**
  * Created by miloway on 2018/3/13.
@@ -18,13 +17,13 @@ import com.miloway.milonote.view.RichEditView;
 
 public class NoteEditActivity extends Activity implements NoteEditEventListener {
 
-    private NoteEditTitleView rlTitle;
-    private RichEditView richEditView;
+    private NoteEditView noteEditView;
 
     /**
      * 编辑对象
      */
     private MiloNote note;
+    private String content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,22 +37,28 @@ public class NoteEditActivity extends Activity implements NoteEditEventListener 
     }
 
     private void initView() {
-        rlTitle = (NoteEditTitleView) findViewById(R.id.rl_title);
-        richEditView = (RichEditView) findViewById(R.id.rich_edit_view);
+        noteEditView = (NoteEditView) findViewById(R.id.note_edit_view);
     }
 
     private void initData() {
         Intent intent = getIntent();
         note = (MiloNote) intent.getSerializableExtra(MiloConstants.NOTE_OBJECT_SERIALIZE_KEY);
+        if (NotesProvider.getInstance().isNewNote(note)) {
+            content = "";
+        }
+        noteEditView.setData(note,content);
+        noteEditView.changeBgColor(note.getBgColor());
     }
 
     private void initEvent() {
-        rlTitle.setListener(this);
+        noteEditView.setListener(this);
     }
 
     @Override
     public void goBack() {
-        NotesProvider.getInstance().saveNote(note);
+        content = noteEditView.getContent();
+        note.setPreviewContent(noteEditView.getPreviewContent());
+        NotesProvider.getInstance().saveNote(note,content);
         finish();
     }
 }

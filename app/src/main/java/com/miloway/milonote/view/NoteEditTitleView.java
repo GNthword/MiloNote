@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.miloway.milonote.R;
 import com.miloway.milonote.listener.NoteEditEventListener;
+import com.miloway.milonote.util.MiloUtil;
 
 /**
  * Created by miloway on 2018/3/13.
@@ -35,7 +36,6 @@ public class NoteEditTitleView extends RelativeLayout implements View.OnClickLis
     protected void onFinishInflate() {
         super.onFinishInflate();
         initView();
-        initData();
         initEvent();
     }
 
@@ -47,15 +47,15 @@ public class NoteEditTitleView extends RelativeLayout implements View.OnClickLis
         ivChangeColor = (ImageView) findViewById(R.id.iv_change_color);
     }
 
-    private void initData() {
-
-    }
-
     private void initEvent() {
         ivBack.setOnClickListener(this);
         tvAlarmClock.setOnClickListener(this);
         ivInsert.setOnClickListener(this);
         ivChangeColor.setOnClickListener(this);
+    }
+
+    public void setModifyTime(long time) {
+        tvTime.setText(MiloUtil.getFormatDatePreview(time));
     }
 
 

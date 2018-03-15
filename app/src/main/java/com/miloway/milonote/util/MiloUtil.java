@@ -51,7 +51,11 @@ public class MiloUtil {
         }
         SimpleDateFormat sdf;
         if (checkThisYear(time)) {
-            sdf = new SimpleDateFormat("MM-dd",Locale.CHINA);
+            if (checkToday(time)) {
+                sdf = new SimpleDateFormat("HH:mm", Locale.CHINA);
+            }else {
+                sdf = new SimpleDateFormat("MM-dd", Locale.CHINA);
+            }
         }else {
             sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINA);
         }
@@ -74,11 +78,22 @@ public class MiloUtil {
     /**
      * 校验年份 是否今年
      */
-    private static boolean checkThisYear(long time){
+    private static boolean checkThisYear(long time) {
         Calendar calendar = Calendar.getInstance();
         int currentYear = calendar.get(Calendar.YEAR);
         calendar.setTime(new Date(time));
         int year = calendar.get(Calendar.YEAR);
         return currentYear == year;
+    }
+
+    /**
+     * 校验日期 是否今天
+     */
+    private static boolean checkToday(long time) {
+        Calendar calendar = Calendar.getInstance();
+        int today = calendar.get(Calendar.DAY_OF_YEAR);
+        calendar.setTime(new Date(time));
+        int day = calendar.get(Calendar.DAY_OF_YEAR);
+        return today == day;
     }
 }

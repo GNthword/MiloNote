@@ -1,17 +1,17 @@
 package com.miloway.milonote.db;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
 import com.miloway.milonote.android.MiloApplication;
 import com.miloway.milonote.obj.MiloNote;
 import com.miloway.milonote.util.BackgroundTool;
+import com.miloway.milonote.util.LogTool;
 import com.miloway.milonote.util.MiloConstants;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -38,6 +38,9 @@ public class NotesProvider {
     private long cacheParentId;
     private LinkedList<MiloNote> cacheNotes;
 
+    private static final String NOTE_CONTENT_TABLE_NAME = "note_content";
+    private static final String NOTE_CONTENT_DETAIL_TABLE_NAME = "note_content_detail";
+
     private NotesProvider(){
         NoteSQLiteOpenHelper helper = new NoteSQLiteOpenHelper(MiloApplication.getMiloApplication());
         database = helper.getWritableDatabase();
@@ -52,7 +55,7 @@ public class NotesProvider {
      */
     public void init(){
         long time = System.currentTimeMillis();
-        String content = "INSERT INTO note_content values ("
+        String content = "INSERT INTO " + NOTE_CONTENT_TABLE_NAME + " values ("
                 + "0,"
                 + "0,"
                 + "0,"
@@ -66,7 +69,7 @@ public class NotesProvider {
                 + "'none',"
                 + "''"
                 + ")";
-        String content_detail = "INSERT INTO note_content_detail values ("
+        String content_detail = "INSERT INTO " + NOTE_CONTENT_DETAIL_TABLE_NAME + " values ("
                 + "0,"
                 + "'This is a sample\n\n\n\n\nThis is a sample'"
                 + ")";
@@ -170,11 +173,12 @@ public class NotesProvider {
     public MiloNote newNote(long parentId, String type){
         MiloNote note = new MiloNote();
         long time = System.currentTimeMillis();
+        note.setId(MiloConstants.NOTE_ID_DEFAULT_VALUE);
         note.setParentId(parentId);
         note.setType(type);
         note.setCreatedDate(time);
-        //note.setModifiedDate(time);
-        note.setPreviewContent(null);
+        note.setModifiedDate(time);
+        note.setPreviewContent("");
         note.setTitle("");
         note.setAlertDate(MiloConstants.NOTE_ALERT_TIME_DEFAULT_VALUE);
         note.setBgColor(BackgroundTool.NOTE_BACKGROUND_COLOR_YELLOW);
@@ -188,8 +192,7 @@ public class NotesProvider {
      */
     public boolean isNewNote(MiloNote note) {
         if (note != null) {
-            //允许空字符串，但为null 则认为是新建的
-            if (note.getPreviewContent() == null) {
+            if (note.getId() == MiloConstants.NOTE_ID_DEFAULT_VALUE) {
                 return true;
             }
         }
@@ -198,24 +201,158 @@ public class NotesProvider {
 
     /**
      * 保存便签
-     *  1. isNewNote 为false
-     *  2.
      */
-    public boolean saveNote(MiloNote note) {
-        if (note == null) {
+    public boolean saveNote(MiloNote note, String content) {
+        if (note == null || content == null) {
             return false;
         }
-        if (isNewNote(note)){
+        //新建后 未修改，不保存
+        if (note.getId() == MiloConstants.NOTE_ID_DEFAULT_VALUE && "".equals(note.getPreviewContent())) {
             return false;
         }
+        //数据错误
+        if (note.getType() == null || note.getCreatedDate() == 0) {
+            return false;
+        }
+        boolean state = false;
+        note.setModifiedDate(System.currentTimeMillis());
+        //保存新建便签
+        String sql = "";
+        if (note.getId() == MiloConstants.NOTE_ID_DEFAULT_VALUE) {
+            //插入
+            sql = getInsertContentSql(note);
+            database.beginTransaction();
+            try {
+                database.execSQL(sql);
+                long id = getTopId(NOTE_CONTENT_TABLE_NAME);
+                if (id != MiloConstants.NOTE_ID_DEFAULT_VALUE) {
+                    sql = getInsertContentDetailSql(id, content);
+                    database.execSQL(sql);
+                    database.setTransactionSuccessful();
+                    state = true;
+                }
+            }catch (Exception e){
+                LogTool.printStackTrace(e);
+            }finally {
+                database.endTransaction();
+            }
 
+        }else {
+            //更新
+            sql = getUpdateContentSql(note);
+            database.beginTransaction();
+            try {
+                database.execSQL(sql);
+                sql = getUpdateContentDetailSql(note.getId(), content);
+                database.execSQL(sql);
+                database.setTransactionSuccessful();
+                state = true;
+            }catch (Exception e){
+                LogTool.printStackTrace(e);
+            }finally {
+                database.endTransaction();
+            }
+        }
 
-
-        return true;
+        return state;
     }
 
+    /**
+     * 删除便签
+     */
+    public boolean deleteNote(long id) {
+        boolean state = false;
+        database.beginTransaction();
+        try {
+            String sql = getDeleteContentSql(id, NOTE_CONTENT_TABLE_NAME);
+            database.execSQL(sql);
+            sql = getDeleteContentSql(id, NOTE_CONTENT_DETAIL_TABLE_NAME);
+            database.execSQL(sql);
+            state = true;
+        }catch (Exception e){
+            LogTool.printStackTrace(e);
+        }finally {
+            database.endTransaction();
+        }
+        return state;
+    }
 
+    private String getInsertContentSql(MiloNote note) {
+        String sql = "INSERT INTO " + NOTE_CONTENT_TABLE_NAME + " VALUES("
+                + "null,"
+                + note.getParentId() + ","
+                + note.getPosition() + ","
+                + "'" + note.getType() + "',"
+                + note.getCreatedDate() + ","
+                + note.getModifiedDate() + ","
+                + "'" + note.getTitle() + "',"
+                + "'" + note.getPreviewContent() + "',"
+                + note.getAlertDate() + ","
+                + "'" + note.getBgColor() + "',"
+                + "'" + note.getPasswordType() + "',"
+                + "'" +  note.getPassword() + "'"
+                + ")";
+        return sql;
+    }
 
+    private String getInsertContentDetailSql(long id, String content) {
+        String sql = "INSERT INTO " + NOTE_CONTENT_DETAIL_TABLE_NAME + " VALUES("
+                + id + ","
+                + "'" + content + "'"
+                + ")";
+        return sql;
+    }
+
+    private String getUpdateContentSql(MiloNote note) {
+        String sql = "UPDATE " + NOTE_CONTENT_TABLE_NAME + " SET "
+                + "parent_id =" + note.getParentId() + ","
+                + "position=" + note.getPosition() + ","
+                + "modified_date=" + note.getModifiedDate() + ","
+                + "title='" + note.getTitle() + "',"
+                + "preview_content'=" + note.getPreviewContent() + "',"
+                + "alert_date=" + note.getAlertDate() + ","
+                + "bg_color='" + note.getBgColor() + "',"
+                + "password_type='" + note.getPasswordType() + "',"
+                + "password='" + note.getPassword() + "'"
+                + " WHERE id = " + note.getId();
+        return sql;
+    }
+
+    private String getUpdateContentDetailSql(long id, String content) {
+        String sql = "UPDATE " + NOTE_CONTENT_DETAIL_TABLE_NAME + " SET "
+                + "content ='" + content + "'"
+                + " WHERE id = " + id;
+        return sql;
+    }
+
+    private long getTopId(String tableName){
+        if (TextUtils.isEmpty(tableName)) {
+            tableName = NOTE_CONTENT_TABLE_NAME;
+        }
+        String sql = "SELECT top 1 id FROM " + tableName + " ORDER BY DESC";
+
+        long id = MiloConstants.NOTE_ID_DEFAULT_VALUE;
+        Cursor cursor = database.rawQuery(sql, null);
+        if (cursor.moveToFirst()){
+            id = cursor.getLong(0);
+        }
+        cursor.close();
+
+        return id;
+    }
+
+    private String getDeleteContentSql(long id, String tableName){
+        if (TextUtils.isEmpty(tableName)) {
+            tableName = NOTE_CONTENT_TABLE_NAME;
+        }
+        String sql = "DELETE FROM " + tableName
+                + "WHERE id = " + id;
+        return sql;
+    }
+
+    /**
+     * 内存回收
+     */
     public void onDestroy(){
         if (database != null){
             database.close();

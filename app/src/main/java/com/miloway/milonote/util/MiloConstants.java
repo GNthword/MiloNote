@@ -17,6 +17,7 @@ public class MiloConstants {
      */
     public static final int NOTE_FOLDER_PARENT_ID_TOP_LEVEL = 0;
     public static final long NOTE_ALERT_TIME_DEFAULT_VALUE = -1;
+    public static final long NOTE_ID_DEFAULT_VALUE = -1;
     /*
      * columnIndex
      */

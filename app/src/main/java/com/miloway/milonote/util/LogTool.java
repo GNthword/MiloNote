@@ -43,4 +43,10 @@ public class LogTool {
             android.util.Log.d(tag, message);
         }
     }
+
+    public static void printStackTrace(Exception e){
+        if (IS_OPEN) {
+            e.printStackTrace();
+        }
+    }
 }

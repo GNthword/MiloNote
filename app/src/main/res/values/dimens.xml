@@ -23,5 +23,10 @@
     <dimen name="edit_view_title_bar_view_padding_left">6dp</dimen>
     <dimen name="edit_view_title_bar_view_padding_right">6dp</dimen>
     <dimen name="edit_view_rich_edit_view_padding_top">7dp</dimen>
+    <dimen name="edit_view_rich_edit_view_padding_right">8dp</dimen>
+    <dimen name="edit_view_rich_edit_view_padding_left">8dp</dimen>
+
+    <dimen name="edit_view_bottom_time_padding_right">8dp</dimen>
+    <dimen name="edit_view_bottom_time_padding_bottom">2dp</dimen>
 
 </resources>
