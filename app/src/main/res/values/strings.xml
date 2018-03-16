@@ -4,4 +4,11 @@
     <string name="launch_button_text">开始</string>
 
     <string name="first_page_new_note">新建便签</string>
+
+    <string name="dialog_title">提示</string>
+    <string name="dialog_btn_ok">确定</string>
+    <string name="dialog_btn_cancel">取消</string>
+
+    <string name="insert_dialog_shot_text">拍摄</string>
+    <string name="insert_dialog_pick_text">从相册选择</string>
 </resources>

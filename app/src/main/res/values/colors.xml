@@ -7,6 +7,11 @@
     <color name="black">#FF000000</color>
     <color name="black_light">#40000000</color>
     <color name="toast_background_color">#FF666666</color>
+    <color name="dialog_outside_background_color">#7F000000</color>
+    <color name="dialog_background_color">#FFF3F3F3</color>
+    <color name="dialog_btn_press_bg">#FFE0E0E0</color>
+    <color name="divider_line_color">#FFE0E0E0</color>
+
 
     <color name="new_note_text_color">#FFB7B7B7</color>
     <color name="primary_text">#FF000000</color>

@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black_light"
         tools:text="2018-3-15 17:22:30"
-        android:textSize="@dimen/text_size_small"
+        android:textSize="@dimen/text_font_size_small"
         android:layout_alignParentBottom="true"
         android:gravity="right"
         android:paddingRight="@dimen/edit_view_bottom_time_padding_right"
