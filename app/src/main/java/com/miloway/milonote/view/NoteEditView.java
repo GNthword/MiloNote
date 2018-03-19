@@ -63,6 +63,7 @@ public class NoteEditView extends RelativeLayout {
         }else {
             color = getResources().getColor(BackgroundTool.getTitleBgColorResId(colorType));
         }
+        rlTitle.setBgColor(colorType);
         rlTitle.setBackgroundColor(color);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             color = getResources().getColor(BackgroundTool.getContentBgColorResId(colorType),null);
@@ -70,6 +71,7 @@ public class NoteEditView extends RelativeLayout {
             color = getResources().getColor(BackgroundTool.getContentBgColorResId(colorType));
         }
         richEditView.setBackgroundColor(color);
+        tvCreateTime.setBackgroundColor(color);
     }
 
     /**

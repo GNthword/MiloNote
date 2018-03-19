@@ -96,4 +96,33 @@ public class MiloUtil {
         int day = calendar.get(Calendar.DAY_OF_YEAR);
         return today == day;
     }
+
+    /**
+     * 获取状态栏高度
+     */
+    public static int getStatusBarHeight() {
+        int resId = MiloApplication.getMiloApplication().getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resId > 0) {
+            return MiloApplication.getMiloApplication().getResources().getDimensionPixelSize(resId);
+        }
+        return 0;
+    }
+
+    /**
+     * 获取导航栏高度（虚拟按键）
+     */
+    public static int getNavigationBarHeight() {
+        int resId = MiloApplication.getMiloApplication().getResources().getIdentifier("config_showNavigationBar", "bool", "android");
+        boolean show = MiloApplication.getMiloApplication().getResources().getBoolean(resId);
+        if (show) {
+            resId = MiloApplication.getMiloApplication().getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+            return MiloApplication.getMiloApplication().getResources().getDimensionPixelSize(resId);
+        }
+        return 0;
+    }
+
+
+
+
+
 }

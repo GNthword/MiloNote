@@ -11,6 +11,7 @@
     <color name="dialog_background_color">#FFF3F3F3</color>
     <color name="dialog_btn_press_bg">#FFE0E0E0</color>
     <color name="divider_line_color">#FFE0E0E0</color>
+    <color name="popup_window_background_color">#FFF4F4F4</color>
 
 
     <color name="new_note_text_color">#FFB7B7B7</color>

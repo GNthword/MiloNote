@@ -6,4 +6,5 @@ package com.miloway.milonote.listener;
 
 public interface NoteEditEventListener {
     void goBack();
+    void changeColor(String bgColor);
 }

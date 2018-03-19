@@ -12,7 +12,8 @@ import com.miloway.milonote.util.MiloConstants;
 import com.miloway.milonote.view.NoteEditView;
 
 /**
- * Created by miloway on 2018/3/13.
+ * Created by miloway on 2018/3/13.<br/>
+ * Activity 负债处理Activity直接事务（传递数据、保存数据、启动/结束Activity、为View设置初始值）
  */
 
 public class NoteEditActivity extends Activity implements NoteEditEventListener {
@@ -60,5 +61,11 @@ public class NoteEditActivity extends Activity implements NoteEditEventListener 
         note.setPreviewContent(noteEditView.getPreviewContent());
         NotesProvider.getInstance().saveNote(note,content);
         finish();
+    }
+
+    @Override
+    public void changeColor(String bgColor) {
+        note.setBgColor(bgColor);
+        noteEditView.changeBgColor(note.getBgColor());
     }
 }

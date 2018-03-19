@@ -357,8 +357,12 @@ public class NotesProvider {
         if (database != null){
             database.close();
         }
-        firstPageNotes.clear();
-        cacheNotes.clear();
+        if (firstPageNotes != null) {
+            firstPageNotes.clear();
+        }
+        if (cacheNotes != null) {
+            cacheNotes.clear();
+        }
         firstPageNotes = null;
         cacheNotes = null;
         cacheParentId = 0;

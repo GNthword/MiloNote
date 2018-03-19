@@ -2,9 +2,7 @@ package com.miloway.milonote.view;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.miloway.milonote.R;
+import com.miloway.milonote.listener.ChangeColorListener;
 import com.miloway.milonote.listener.NoteEditEventListener;
 import com.miloway.milonote.util.DialogFactory;
 import com.miloway.milonote.util.MiloUtil;
@@ -36,6 +35,10 @@ public class NoteEditTitleView extends RelativeLayout implements View.OnClickLis
      * 对话框
      */
     private Dialog dialog;
+
+    private PopupWindow popupWindow;
+
+    private String bgColor;
 
     public NoteEditTitleView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -71,6 +74,9 @@ public class NoteEditTitleView extends RelativeLayout implements View.OnClickLis
         tvTime.setText(MiloUtil.getFormatDatePreview(time));
     }
 
+    public void setBgColor(String bgColor) {
+        this.bgColor = bgColor;
+    }
 
     @Override
     public void onClick(View v) {
@@ -116,18 +122,32 @@ public class NoteEditTitleView extends RelativeLayout implements View.OnClickLis
 
 
     private void showChangeColorDialog() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.note_edit_title_view_change_color_layout, null);
+        NoteEditTitleChangeColorView view = (NoteEditTitleChangeColorView) LayoutInflater.from(getContext()).inflate(R.layout.note_edit_title_view_change_color_layout, null);
 
-        PopupWindow popupWindow = new PopupWindow(view);
+        popupWindow = new PopupWindow(view);
         popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        //ivChangeColor.getLocalVisibleRect(rect);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setTouchable(true);
         popupWindow.setAnimationStyle(R.style.MiloPopupWindow);
-        popupWindow.showAsDropDown(ivChangeColor);
-    }
+        //popupWindow.showAsDropDown(ivChangeColor);
+        int x = ivChangeColor.getWidth();
+        int y = ivChangeColor.getHeight() + 10;
+        popupWindow.showAtLocation(ivChangeColor, Gravity.TOP,x,y);
 
+        view.setBgColor(bgColor);
+        view.setListener(new ChangeColorListener() {
+            @Override
+            public void changeColor(String bgColor) {
+                if (listener != null) {
+                    listener.changeColor(bgColor);
+                }
+                if (popupWindow != null) {
+                    popupWindow.dismiss();
+                }
+            }
+        });
+    }
 
     public void setListener(NoteEditEventListener listener) {
         this.listener = listener;

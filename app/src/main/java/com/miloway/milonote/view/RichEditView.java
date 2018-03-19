@@ -1,10 +1,13 @@
 package com.miloway.milonote.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
+
+import com.miloway.milonote.util.LogTool;
 
 /**
  * Created by miloway on 2018/3/13.
@@ -29,18 +32,23 @@ public class RichEditView extends EditText {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            LogTool.d("before",s.toString());
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+            LogTool.d("onchange",s.toString());
         }
 
         @Override
         public void afterTextChanged(Editable s) {
 
         }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 
     @Override
