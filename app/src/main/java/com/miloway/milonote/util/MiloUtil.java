@@ -1,13 +1,23 @@
 package com.miloway.milonote.util;
 
 import android.content.pm.ApplicationInfo;
+import android.text.TextUtils;
 
 import com.miloway.milonote.android.MiloApplication;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by miloway on 2018/2/22.
@@ -121,6 +131,78 @@ public class MiloUtil {
         return 0;
     }
 
+
+    /**
+     * 获取cpu信息
+     */
+    public static String getCpuInfo() {
+        String dir = "/proc/cpuinfo";
+        FileReader reader = null;
+        BufferedReader bufferedReader = null;
+        try {
+            reader = new FileReader(dir);
+            bufferedReader = new BufferedReader(reader);
+            String temp;
+            while ((temp = bufferedReader.readLine()) != null) {
+                //for name -> Hardware	: Qualcomm Technologies, Inc MSM8998
+                //for cores -> CPU architecture: 8
+                LogTool.d(temp);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "";
+    }
+
+    /**
+     * 获取cpu核心数量
+     */
+    public static void getCpuCores() {
+        LogTool.d("cores", "" + Runtime.getRuntime().availableProcessors());
+        File file = new File("/sys/devices/system/cpu/");
+        FileFilter filter = new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                String name = pathname.getName();
+                if (name.startsWith("cpu")) {
+                    String[] splits = name.split("cpu");
+                    return isInteger(splits[1]);
+                }
+                return false;
+            }
+        };
+        File[] file1 = file.listFiles(filter);
+        LogTool.d("cores2", "" + file1.length);
+    }
+
+    /**
+     * 是否整数
+     */
+    public static boolean isInteger(String s) {
+        if (TextUtils.isEmpty(s)) {
+            return false;
+        }
+        Pattern p = Pattern.compile("[-+]?[0-9]+");
+        Matcher m = p.matcher(s);
+        return m.matches();
+    }
 
 
 

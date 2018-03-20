@@ -10,8 +10,8 @@ public class LogTool {
     private static String TAG = "log_tool";
     private static boolean IS_OPEN = false;
 
-    public LogTool() {
-        IS_OPEN = MiloUtil.getApplicationDebugState();
+    public static void setLogState(boolean open) {
+        IS_OPEN = open;
     }
 
     public static void d(String message){

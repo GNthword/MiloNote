@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import com.miloway.milonote.R;
 import com.miloway.milonote.android.MiloToast;
 import com.miloway.milonote.db.NotesProvider;
+import com.miloway.milonote.util.LogTool;
+import com.miloway.milonote.util.MiloUtil;
 import com.miloway.milonote.util.SPTool;
 
 import java.util.Timer;
@@ -38,12 +40,17 @@ public class LaunchActivity extends Activity{
     }
 
     private void init(){
+        LogTool.setLogState(MiloUtil.getApplicationDebugState());
+
         boolean isInit = SPTool.get(this, SPTool.SP_FILE_LAUNCH_CONFIG, SPTool.SP_KEY_LAUNCH_INIT, false);
         if (!isInit){
             NotesProvider notesProvider = NotesProvider.getInstance();
             notesProvider.init();
             SPTool.put(this, SPTool.SP_FILE_LAUNCH_CONFIG, SPTool.SP_KEY_LAUNCH_INIT, true);
         }
+
+        MiloUtil.getCpuInfo();
+        MiloUtil.getCpuCores();
     }
 
     private void prepareData(){

@@ -23,6 +23,7 @@
 
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.NoteEditActivity"/>
+        <activity android:name=".activity.SettingActivity"/>
     </application>
 
 </manifest>
