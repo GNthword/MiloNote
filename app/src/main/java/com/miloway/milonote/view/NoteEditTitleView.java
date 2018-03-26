@@ -97,9 +97,6 @@ public class NoteEditTitleView extends RelativeLayout implements View.OnClickLis
             }
             openCamera();
         }else if (id == R.id.tv_pick) {
-            if (dialog != null) {
-                dialog.dismiss();
-            }
             pickPicture();
         }
 
@@ -117,7 +114,12 @@ public class NoteEditTitleView extends RelativeLayout implements View.OnClickLis
     }
 
     private void pickPicture() {
-
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        if (listener != null) {
+            listener.pickPicture();
+        }
     }
 
 

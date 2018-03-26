@@ -2,6 +2,7 @@ package com.miloway.milonote.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.miloway.milonote.R;
@@ -67,5 +68,26 @@ public class NoteEditActivity extends Activity implements NoteEditEventListener 
     public void changeColor(String bgColor) {
         note.setBgColor(bgColor);
         noteEditView.changeBgColor(note.getBgColor());
+    }
+
+    @Override
+    public void pickPicture() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent,MiloConstants.RESULT_TYPE_PICK_PICTURE);
+    }
+
+    @Override
+    public void openCamera() {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MiloConstants.RESULT_TYPE_PICK_PICTURE) {
+            Uri uri = data.getData();
+            noteEditView.insertPicture(uri);
+        }
     }
 }

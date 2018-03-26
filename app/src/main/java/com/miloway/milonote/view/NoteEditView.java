@@ -1,6 +1,9 @@
 package com.miloway.milonote.view;
 
 import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -49,7 +52,11 @@ public class NoteEditView extends RelativeLayout {
             return;
         }
         rlTitle.setModifyTime(note.getModifiedDate());
-        richEditView.setText(content);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            richEditView.setText(Html.fromHtml(content,Html.FROM_HTML_MODE_LEGACY));
+        }else {
+            richEditView.setText(Html.fromHtml(content));
+        }
         tvCreateTime.setText(MiloUtil.getFormatDate(note.getCreatedDate()));
     }
 
@@ -72,6 +79,10 @@ public class NoteEditView extends RelativeLayout {
         }
         richEditView.setBackgroundColor(color);
         tvCreateTime.setBackgroundColor(color);
+    }
+
+    public void insertPicture(Uri uri){
+        richEditView.insertPicture(uri);
     }
 
     /**

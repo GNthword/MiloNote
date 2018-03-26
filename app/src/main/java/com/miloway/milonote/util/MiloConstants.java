@@ -40,4 +40,9 @@ public class MiloConstants {
      */
     public static final String NOTE_OBJECT_SERIALIZE_KEY = "milo_note";
 
+    /**
+     * startActivityForResult
+     */
+    public static final int RESULT_TYPE_PICK_PICTURE = 1;
+    public static final int RESULT_TYPE_OPEN_CAMERA = 2;
 }
