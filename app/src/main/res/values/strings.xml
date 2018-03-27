@@ -11,4 +11,8 @@
 
     <string name="insert_dialog_shot_text">拍摄</string>
     <string name="insert_dialog_pick_text">从相册选择</string>
+
+    <string name="permission_tip_read_and_write_external_storage">需要获取读写存储的权限，否则app无法正常运行</string>
+    <string name="permission_tip_internet">需要获取访问互联网的权限</string>
+    <string name="permission_tip_app_exit">缺少基础权限，应用无法正常运行</string>
 </resources>

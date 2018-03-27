@@ -45,4 +45,5 @@ public class MiloConstants {
      */
     public static final int RESULT_TYPE_PICK_PICTURE = 1;
     public static final int RESULT_TYPE_OPEN_CAMERA = 2;
+    public static final int RESULT_TYPE_PERMISSION_BASE = 3;
 }

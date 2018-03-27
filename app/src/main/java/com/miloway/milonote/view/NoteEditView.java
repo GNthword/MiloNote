@@ -1,7 +1,6 @@
 package com.miloway.milonote.view;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.text.Html;
 import android.util.AttributeSet;
@@ -81,8 +80,8 @@ public class NoteEditView extends RelativeLayout {
         tvCreateTime.setBackgroundColor(color);
     }
 
-    public void insertPicture(Uri uri){
-        richEditView.insertPicture(uri);
+    public void insertPicture(String path){
+        richEditView.insertPicture(path);
     }
 
     /**

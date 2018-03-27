@@ -1,16 +1,26 @@
 package com.miloway.milonote.activity;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 
 import com.miloway.milonote.R;
 import com.miloway.milonote.db.NotesProvider;
 import com.miloway.milonote.listener.NoteEditEventListener;
 import com.miloway.milonote.obj.MiloNote;
 import com.miloway.milonote.util.MiloConstants;
+import com.miloway.milonote.util.MiloUtil;
 import com.miloway.milonote.view.NoteEditView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by miloway on 2018/3/13.<br/>
@@ -26,6 +36,8 @@ public class NoteEditActivity extends Activity implements NoteEditEventListener 
      */
     private MiloNote note;
     private String content;
+    private String savePath;
+    private Uri saveUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,15 +91,96 @@ public class NoteEditActivity extends Activity implements NoteEditEventListener 
 
     @Override
     public void openCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        String name = MiloUtil.getCameraPictureName();
+        savePath = MiloUtil.getCameraPictureSavePath() + name;
+        File file = new File(savePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        ContentValues contentValues = new ContentValues(2);
 
+        //contentValues.put(MediaStore.Images.Media.DATA, savePath);
+        //如果想拍完存在系统相机的默认目录,改为
+        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, name);
+
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        saveUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+        //Uri uri = Uri.fromFile(file);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,saveUri);
+        startActivityForResult(intent,MiloConstants.RESULT_TYPE_OPEN_CAMERA);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MiloConstants.RESULT_TYPE_PICK_PICTURE) {
-            Uri uri = data.getData();
-            noteEditView.insertPicture(uri);
+            if (data != null) {
+                Uri uri = data.getData();
+                noteEditView.insertPicture(MiloUtil.getPictureFullPath(this, uri));
+            }
+        }else if (requestCode == MiloConstants.RESULT_TYPE_OPEN_CAMERA) {
+            if (data == null && saveUri != null && savePath != null) {
+                dealPictureFromCamera();
+            }
         }
     }
+
+    private void dealPictureFromCamera() {
+        String[] projection = {
+                MediaStore.Images.Media.DATA
+        };
+        String path = null;
+        Cursor c = getContentResolver().query(saveUri, projection, null, null, null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                path = c.getString(0);
+            }
+            c.close();
+        }
+        if (path == null) {
+            return;
+        }
+
+        FileOutputStream fos = null;
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(path);
+            fos = new FileOutputStream(savePath);
+            byte[] b = new byte[1024];
+            while (fis.read(b) != -1) {
+                fos.write(b);
+            }
+            fos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        File file = new File(path);
+        file.delete();
+        File file1 = new File(savePath);
+        if (file1.length() > 0) {
+            noteEditView.insertPicture(savePath);
+        }
+    }
+
 }

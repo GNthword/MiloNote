@@ -1,6 +1,10 @@
 package com.miloway.milonote.util;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.miloway.milonote.android.MiloApplication;
@@ -11,7 +15,6 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -204,7 +207,33 @@ public class MiloUtil {
         return m.matches();
     }
 
+    public static String getCameraPictureSavePath() {
+        return MiloApplication.getMiloApplication().getFilesDir() + "/img/";
+    }
+    /**
+     * 相机生产的照片名称
+     */
+    public static String getCameraPictureName() {
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss",Locale.CHINA);
+        return "IMG_" + sdf.format(new Date()) + ".jpg";
+    }
 
+
+    public static String getPictureFullPath(Context context, Uri uri) {
+        if (uri == null || context == null) {
+            return null;
+        }
+        String path = null;
+        String [] query = new String[]{MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri,query,null,null,null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()){
+                path = cursor.getString(0);
+            }
+            cursor.close();
+        }
+        return path;
+    }
 
 
 }

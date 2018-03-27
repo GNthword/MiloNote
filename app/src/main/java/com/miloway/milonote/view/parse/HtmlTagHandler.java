@@ -12,6 +12,8 @@ import org.xml.sax.XMLReader;
 public class HtmlTagHandler implements Html.TagHandler {
     @Override
     public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+        if (tag.equals("img")) {
 
+        }
     }
 }

@@ -92,9 +92,6 @@ public class NoteEditTitleView extends RelativeLayout implements View.OnClickLis
         }else if (id == R.id.iv_change_color) {
             showChangeColorDialog();
         }else if (id == R.id.tv_shot) {
-            if (dialog != null) {
-                dialog.dismiss();
-            }
             openCamera();
         }else if (id == R.id.tv_pick) {
             pickPicture();
@@ -110,7 +107,12 @@ public class NoteEditTitleView extends RelativeLayout implements View.OnClickLis
     }
 
     private void openCamera() {
-
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        if (listener != null) {
+            listener.openCamera();
+        }
     }
 
     private void pickPicture() {

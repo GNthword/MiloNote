@@ -1,17 +1,11 @@
 package com.miloway.milonote.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.text.Editable;
 import android.text.Html;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
@@ -20,7 +14,6 @@ import com.miloway.milonote.view.parse.HtmlImageGetter;
 import com.miloway.milonote.view.parse.HtmlTagHandler;
 import com.miloway.milonote.view.tag.HTML_TAG;
 
-import java.io.FileNotFoundException;
 
 /**
  * Created by miloway on 2018/3/13.
@@ -29,6 +22,7 @@ import java.io.FileNotFoundException;
 public class RichEditView extends EditText {
     private HtmlImageGetter imageGetter;
     private HtmlTagHandler tagHandler;
+    private String content = "";
 
     public RichEditView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,36 +41,43 @@ public class RichEditView extends EditText {
 
     }
 
-    public void insertPicture(Uri uri) {
-        if (uri == null) {
+    public void insertPicture(String path) {
+        if (TextUtils.isEmpty(path)) {
             return;
         }
-        Bitmap bitmap = null;
-        try {
 
-            BitmapFactory.Options option = new BitmapFactory.Options();
-            option.inPreferredConfig = Bitmap.Config.RGB_565;
-            bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri),null,option);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return;
-        }
-        BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
-        drawable.setBounds(0,0,200,200);
-        ImageSpan span = new ImageSpan(drawable);
+        String string = HTML_TAG.IMG_START + path + HTML_TAG.IMG_END;
+        int selection = getSelectionStart();
+        int selectionEnd = getSelectionEnd();
 
-        SpannableStringBuilder builder = new SpannableStringBuilder("getResources");
-        builder.setSpan(span,6,7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        //this.setText(builder);
-        String str = super.getText().toString();
+        Editable editable = super.getText();
+        editable.insert(selection,string);
 
-        String string = HTML_TAG.IMG_START + uri.getPath() + HTML_TAG.IMG_END;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            builder.append(Html.fromHtml(string,Html.FROM_HTML_MODE_LEGACY,imageGetter,tagHandler));
+            content = Html.toHtml(editable,Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE);
         }else {
-            builder.append(Html.fromHtml(string,imageGetter,tagHandler));
+            content = Html.toHtml(editable);
         }
-        setText(builder);
+
+        if (content.endsWith("\n")) {
+            content = content.substring(0,content.length()-1);
+        }
+
+        content = content.replace("&lt;","<");
+        content = content.replace("&gt;",">");
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY, imageGetter, tagHandler));
+        }else {
+            setText(Html.fromHtml(content, imageGetter, tagHandler));
+        }
+
+        if (selection == selectionEnd) {
+            selectionEnd++;
+        }
+        setSelection(selectionEnd);
     }
 
 
