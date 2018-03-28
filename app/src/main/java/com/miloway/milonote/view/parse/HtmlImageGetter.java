@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
+import android.view.View;
+import android.widget.EditText;
 
 import com.miloway.milonote.android.MiloApplication;
 
@@ -19,6 +21,12 @@ import java.lang.ref.SoftReference;
  */
 
 public class HtmlImageGetter implements Html.ImageGetter {
+
+    private EditText view;
+    public HtmlImageGetter(EditText view) {
+        this.view = view;
+    }
+
     @Override
     public Drawable getDrawable(String source) {
         Context context = MiloApplication.getMiloApplication();
@@ -37,9 +45,27 @@ public class HtmlImageGetter implements Html.ImageGetter {
             return null;
         }
 
+        if (view != null) {
+            if (bitmap.getWidth() > view.getWidth()) {
+                int height = bitmap.getHeight() * view.getWidth() / bitmap.getWidth();
+                bitmap = Bitmap.createScaledBitmap(bitmap, view.getWidth(), height, false);
+            }
+
+            int lineHeight = (int) (view.getPaint().getFontMetrics().bottom - view.getPaint().getFontMetrics().top) * 3;
+            int maxShowHeight = view.getHeight() - lineHeight;
+            if (bitmap.getHeight() > maxShowHeight) {
+                int width = bitmap.getWidth() * maxShowHeight / bitmap.getHeight();
+                bitmap = Bitmap.createScaledBitmap(bitmap, width, maxShowHeight, false);
+            }
+        }
+
         BitmapDrawable drawable = new BitmapDrawable(context.getResources(), bitmap);
-        drawable.setBounds(0,0,300,300);
+        drawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
 
         return drawable;
+    }
+
+    public void destroy() {
+        view = null;
     }
 }

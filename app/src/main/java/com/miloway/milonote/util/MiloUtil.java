@@ -208,7 +208,7 @@ public class MiloUtil {
     }
 
     public static String getCameraPictureSavePath() {
-        return MiloApplication.getMiloApplication().getFilesDir() + "/img/";
+        return MiloApplication.getMiloApplication().getExternalFilesDir(null) + "/img/";
     }
     /**
      * 相机生产的照片名称

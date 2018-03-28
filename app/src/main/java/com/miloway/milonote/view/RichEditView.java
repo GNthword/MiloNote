@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.miloway.milonote.view.input.MyTextWatch;
 import com.miloway.milonote.view.parse.HtmlImageGetter;
 import com.miloway.milonote.view.parse.HtmlTagHandler;
+import com.miloway.milonote.view.parse.ImageClickListener;
 import com.miloway.milonote.view.tag.HTML_TAG;
 
 
@@ -19,7 +20,7 @@ import com.miloway.milonote.view.tag.HTML_TAG;
  * Created by miloway on 2018/3/13.
  */
 
-public class RichEditView extends EditText {
+public class RichEditView extends EditText implements ImageClickListener {
     private HtmlImageGetter imageGetter;
     private HtmlTagHandler tagHandler;
     private String content = "";
@@ -36,9 +37,8 @@ public class RichEditView extends EditText {
     protected void onFinishInflate() {
         super.onFinishInflate();
         addTextChangedListener(new MyTextWatch());
-        imageGetter = new HtmlImageGetter();
-        tagHandler = new HtmlTagHandler();
-
+        imageGetter = new HtmlImageGetter(this);
+        tagHandler = new HtmlTagHandler(this);
     }
 
     public void insertPicture(String path) {
@@ -46,16 +46,16 @@ public class RichEditView extends EditText {
             return;
         }
 
-        String string = HTML_TAG.IMG_START + path + HTML_TAG.IMG_END;
+        String string = HTML_TAG.getImgTag(path);
         int selection = getSelectionStart();
         int selectionEnd = getSelectionEnd();
 
         Editable editable = super.getText();
-        editable.insert(selection,string);
+        editable.insert(selection, string);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            content = Html.toHtml(editable,Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE);
+            content = Html.toHtml(editable, Html.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE);
         }else {
             content = Html.toHtml(editable);
         }
@@ -96,6 +96,8 @@ public class RichEditView extends EditText {
      * 获取内容
      */
     public String getContent() {
+        imageGetter.destroy();
+        tagHandler.destroy();
         return null;
         //return getText().toString();
     }
@@ -107,4 +109,8 @@ public class RichEditView extends EditText {
         return super.getText().toString();
     }
 
+    @Override
+    public void imageClick(int start, int end) {
+
+    }
 }

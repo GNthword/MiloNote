@@ -15,4 +15,7 @@
     <string name="permission_tip_read_and_write_external_storage">需要获取读写存储的权限，否则app无法正常运行</string>
     <string name="permission_tip_internet">需要获取访问互联网的权限</string>
     <string name="permission_tip_app_exit">缺少基础权限，应用无法正常运行</string>
+
+    <string name="image_selected_pop_window_view_text">查看</string>
+    <string name="image_selected_pop_window_delete_text">删除</string>
 </resources>

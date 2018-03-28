@@ -175,6 +175,7 @@ public class NoteEditActivity extends Activity implements NoteEditEventListener 
                 }
             }
         }
+        //复制到私有目录
         File file = new File(path);
         file.delete();
         File file1 = new File(savePath);
