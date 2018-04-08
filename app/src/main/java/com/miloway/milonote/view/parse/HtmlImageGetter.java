@@ -51,8 +51,8 @@ public class HtmlImageGetter implements Html.ImageGetter {
                 bitmap = Bitmap.createScaledBitmap(bitmap, view.getWidth(), height, false);
             }
 
-            int lineHeight = (int) (view.getPaint().getFontMetrics().bottom - view.getPaint().getFontMetrics().top) * 3;
-            int maxShowHeight = view.getHeight() - lineHeight;
+            int lineHeight = (int) (view.getPaint().getFontMetrics().bottom - view.getPaint().getFontMetrics().top);
+            int maxShowHeight = view.getHeight() - lineHeight * 4;
             if (bitmap.getHeight() > maxShowHeight) {
                 int width = bitmap.getWidth() * maxShowHeight / bitmap.getHeight();
                 bitmap = Bitmap.createScaledBitmap(bitmap, width, maxShowHeight, false);
