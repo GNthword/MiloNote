@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.miloway.milonote.android.MiloApplication;
 
@@ -151,10 +153,8 @@ public class MiloUtil {
                 //for cores -> CPU architecture: 8
                 LogTool.d(temp);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTool.printStackTrace(e);
         } finally {
             if (bufferedReader != null) {
                 try {
@@ -235,5 +235,15 @@ public class MiloUtil {
         return path;
     }
 
+
+    public static void hideSoftKeyboard(Context context, View view) {
+        if (context == null || view == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        //imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        //view.clearFocus();
+    }
 
 }

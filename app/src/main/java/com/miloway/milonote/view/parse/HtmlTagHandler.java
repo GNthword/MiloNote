@@ -2,10 +2,9 @@ package com.miloway.milonote.view.parse;
 
 import android.text.Editable;
 import android.text.Html;
-import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.SpannedString;
 import android.text.style.ClickableSpan;
+import android.text.style.ImageSpan;
 import android.view.View;
 
 import org.xml.sax.XMLReader;
@@ -38,9 +37,12 @@ public class HtmlTagHandler implements Html.TagHandler {
                 ClickableSpan span = new ClickableSpan() {
                     @Override
                     public void onClick(View widget) {
-                        listener.imageClick(start, end);
+                        if (listener != null) {
+                            listener.imageClick(start, end);
+                        }
                     }
                 };
+                ImageSpan[] spans = output.getSpans(start,end, ImageSpan.class);
                 output.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
 
