@@ -23,12 +23,21 @@ import java.lang.ref.SoftReference;
 public class HtmlImageGetter implements Html.ImageGetter {
 
     private EditText view;
+    private int height;
+    private int width;
+    private boolean isInit;
     public HtmlImageGetter(EditText view) {
         this.view = view;
     }
 
     @Override
     public Drawable getDrawable(String source) {
+        if (!isInit && view.getHeight() > 0) {
+            width = view.getWidth();
+            height = view.getHeight();
+            isInit = true;
+        }
+
         Context context = MiloApplication.getMiloApplication();
 
         BitmapFactory.Options option = new BitmapFactory.Options();
@@ -46,13 +55,13 @@ public class HtmlImageGetter implements Html.ImageGetter {
         }
 
         if (view != null) {
-            if (bitmap.getWidth() > view.getWidth()) {
-                int height = bitmap.getHeight() * view.getWidth() / bitmap.getWidth();
-                bitmap = Bitmap.createScaledBitmap(bitmap, view.getWidth(), height, false);
+            if (bitmap.getWidth() > width) {
+                int height = bitmap.getHeight() * width / bitmap.getWidth();
+                bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
             }
 
             int lineHeight = (int) (view.getPaint().getFontMetrics().bottom - view.getPaint().getFontMetrics().top);
-            int maxShowHeight = view.getHeight() - lineHeight * 4;
+            int maxShowHeight = height - lineHeight * 4;
             if (bitmap.getHeight() > maxShowHeight) {
                 int width = bitmap.getWidth() * maxShowHeight / bitmap.getHeight();
                 bitmap = Bitmap.createScaledBitmap(bitmap, width, maxShowHeight, false);

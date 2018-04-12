@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.ResultReceiver;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,7 +15,6 @@ import com.miloway.milonote.android.MiloApplication;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -236,13 +236,18 @@ public class MiloUtil {
     }
 
 
-    public static void hideSoftKeyboard(Context context, View view) {
+    public static void hideSoftKeyboard(Context context, View view, ResultReceiver rr) {
         if (context == null || view == null) {
             return;
         }
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        //imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (imm.isActive()) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS, rr);
+        }
+//
+//        if (view instanceof EditText) {
+//           ((EditText)view).setKeyListener(listener);
+//        }
         //view.clearFocus();
     }
 

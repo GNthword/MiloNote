@@ -7,12 +7,15 @@ import android.os.Build;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.KeyListener;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+import com.miloway.milonote.listener.InputMethodListener;
 import com.miloway.milonote.util.LogTool;
 import com.miloway.milonote.util.MiloUtil;
+import com.miloway.milonote.view.input.InputResultReceiver;
 import com.miloway.milonote.view.input.MyTextWatch;
 import com.miloway.milonote.view.parse.HtmlImageGetter;
 import com.miloway.milonote.view.parse.HtmlTagHandler;
@@ -24,11 +27,13 @@ import com.miloway.milonote.view.tag.HTML_TAG;
  * Created by miloway on 2018/3/13.
  */
 
-public class RichEditView extends EditText implements ImageClickListener {
+public class RichEditView extends EditText implements ImageClickListener, InputMethodListener {
     private HtmlImageGetter imageGetter;
     private HtmlTagHandler tagHandler;
     private String content = "";
 
+    private InputResultReceiver inputResultReceiver;
+    private KeyListener keyListener;
     public RichEditView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -44,6 +49,8 @@ public class RichEditView extends EditText implements ImageClickListener {
         imageGetter = new HtmlImageGetter(this);
         tagHandler = new HtmlTagHandler(this);
         setMovementMethod(LinkMovementMethod.getInstance());
+        inputResultReceiver = new InputResultReceiver(null, this);
+        keyListener = this.getKeyListener();
     }
 
     public void insertPicture(String path) {
@@ -149,7 +156,8 @@ public class RichEditView extends EditText implements ImageClickListener {
 
     @Override
     public void imageClick(int start, int end) {
-        MiloUtil.hideSoftKeyboard(getContext(), this);
+        setKeyListener(null);
+        MiloUtil.hideSoftKeyboard(getContext(), this, inputResultReceiver);
     }
 
     @Override
@@ -160,4 +168,8 @@ public class RichEditView extends EditText implements ImageClickListener {
         }
     }
 
+    @Override
+    public void notifyInputState(int resultCode) {
+        setKeyListener(keyListener);
+    }
 }
