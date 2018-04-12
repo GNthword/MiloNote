@@ -9,7 +9,9 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.KeyListener;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ImageSpan;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.EditText;
 
 import com.miloway.milonote.listener.InputMethodListener;
@@ -34,6 +36,7 @@ public class RichEditView extends EditText implements ImageClickListener, InputM
 
     private InputResultReceiver inputResultReceiver;
     private KeyListener keyListener;
+    private MotionEvent firstEvent;
     public RichEditView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -51,6 +54,7 @@ public class RichEditView extends EditText implements ImageClickListener, InputM
         setMovementMethod(LinkMovementMethod.getInstance());
         inputResultReceiver = new InputResultReceiver(null, this);
         keyListener = this.getKeyListener();
+
     }
 
     public void insertPicture(String path) {
@@ -155,17 +159,38 @@ public class RichEditView extends EditText implements ImageClickListener, InputM
     }
 
     @Override
-    public void imageClick(int start, int end) {
-        setKeyListener(null);
-        MiloUtil.hideSoftKeyboard(getContext(), this, inputResultReceiver);
+    public void imageClick(ImageSpan span) {
+        if (firstEvent != null) {
+            Rect rect = span.getDrawable().getBounds();
+            if (rect.contains((int)firstEvent.getX(), (int)firstEvent.getY())) {
+                setKeyListener(null);
+                MiloUtil.hideSoftKeyboard(getContext(), this, inputResultReceiver);
+            }
+        }
+        //setKeyListener(null);
+        //MiloUtil.hideSoftKeyboard(getContext(), this, inputResultReceiver);
     }
 
-    @Override
-    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
-        super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        if (focused) {
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN :
+                firstEvent = event;
+                break;
+            case MotionEvent.ACTION_MOVE :
+                break;
+            case MotionEvent.ACTION_UP :
+                if (firstEvent == null) {
+                    break;
+                }
+                if (event.getX() != firstEvent.getX() ||
+                        event.getY() != firstEvent.getY()) {
+                    firstEvent = null;
+                }
+                break;
         }
+        return super.onTouchEvent(event);
     }
 
     @Override

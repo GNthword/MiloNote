@@ -6,6 +6,7 @@ import android.text.Spanned;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.view.View;
+import android.widget.EditText;
 
 import org.xml.sax.XMLReader;
 
@@ -32,17 +33,9 @@ public class HtmlTagHandler implements Html.TagHandler {
             if (opening) {
                 stack.push(output.length());
             }else {
-                final int start = stack.pop();
-                final int end = output.length();
-                ClickableSpan span = new ClickableSpan() {
-                    @Override
-                    public void onClick(View widget) {
-                        if (listener != null) {
-                            listener.imageClick(start, end);
-                        }
-                    }
-                };
-                ImageSpan[] spans = output.getSpans(start,end, ImageSpan.class);
+                int start = stack.pop();
+                int end = output.length();
+                ClickableSpan span = new MyClickableSpan(start, end);
                 output.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
 
@@ -66,5 +59,25 @@ public class HtmlTagHandler implements Html.TagHandler {
     public void destroy() {
         stack.clear();
         listener = null;
+    }
+
+
+    private class MyClickableSpan extends ClickableSpan {
+        private int start;
+        private int end;
+        public MyClickableSpan(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public void onClick(View widget) {
+            if (widget instanceof EditText) {
+                ImageSpan[] spans = ((EditText)widget).getText().getSpans(start, end, ImageSpan.class);
+                if (listener != null && spans != null) {
+                    listener.imageClick(spans[0]);
+                }
+            }
+        }
     }
 }

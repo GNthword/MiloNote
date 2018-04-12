@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 
 import com.miloway.milonote.android.MiloApplication;
@@ -28,15 +29,12 @@ public class HtmlImageGetter implements Html.ImageGetter {
     private boolean isInit;
     public HtmlImageGetter(EditText view) {
         this.view = view;
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new GlobalLayoutListener());
     }
 
     @Override
     public Drawable getDrawable(String source) {
-        if (!isInit && view.getHeight() > 0) {
-            width = view.getWidth();
-            height = view.getHeight();
-            isInit = true;
-        }
+
 
         Context context = MiloApplication.getMiloApplication();
 
@@ -76,5 +74,20 @@ public class HtmlImageGetter implements Html.ImageGetter {
 
     public void destroy() {
         view = null;
+    }
+
+
+    class GlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+        @Override
+        public void onGlobalLayout() {
+            if (view == null) {
+                return;
+            }
+            if (!isInit && view.getHeight() > 0) {
+                width = view.getWidth();
+                height = view.getHeight();
+                isInit = true;
+            }
+        }
     }
 }

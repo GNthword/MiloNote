@@ -28,6 +28,10 @@ public class InputResultReceiver extends ResultReceiver {
     @Override
     protected void onReceiveResult(int resultCode, Bundle resultData) {
         super.onReceiveResult(resultCode, resultData);
+        notify(resultCode);
+    }
+
+    public void notify(int resultCode) {
         if (listener != null) {
             listener.notifyInputState(resultCode);
         }

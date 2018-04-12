@@ -1,5 +1,6 @@
 package com.miloway.milonote.util;
 
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.database.Cursor;
@@ -7,10 +8,12 @@ import android.net.Uri;
 import android.os.ResultReceiver;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.miloway.milonote.android.MiloApplication;
+import com.miloway.milonote.view.input.InputResultReceiver;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -242,13 +245,27 @@ public class MiloUtil {
         }
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive()) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS, rr);
+            if (!imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS, rr)) {
+                ((InputResultReceiver)rr).notify(0);
+            }
         }
-//
-//        if (view instanceof EditText) {
-//           ((EditText)view).setKeyListener(listener);
-//        }
-        //view.clearFocus();
+    }
+
+    /**
+     * 模拟后退
+     */
+    public static void goBack() {
+        new Thread(){
+            public void run() {
+                try{
+                    Instrumentation inst = new Instrumentation();
+                    inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+                }
+                catch (Exception e) {
+                    LogTool.e("Exception when onBack", e.toString());
+                }
+            }
+        }.start();
     }
 
 }
