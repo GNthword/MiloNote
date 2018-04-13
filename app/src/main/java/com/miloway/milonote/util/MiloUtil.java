@@ -262,7 +262,7 @@ public class MiloUtil {
                     inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
                 }
                 catch (Exception e) {
-                    LogTool.e("Exception when onBack", e.toString());
+                    LogTool.printStackTrace(e);
                 }
             }
         }.start();
