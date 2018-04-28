@@ -66,7 +66,6 @@ public class RichEditView extends EditText implements ImageClickListener, InputM
             return;
         }
 
-        boolean needNewLine = true;
         String string = HTML_TAG.getImgTag(path);
         int selection = getSelectionStart();
         int selectionEnd = getSelectionEnd();
@@ -90,21 +89,6 @@ public class RichEditView extends EditText implements ImageClickListener, InputM
             selectionEnd+=3;
         }
         setSelection(selectionEnd);
-    }
-
-    private boolean isNeedNewLine() {
-        int line = getCursorLine();
-        String text = EditParser.getFormatContent(super.getText());
-        return true;
-    }
-
-    private int getCursorLine(){
-        int selection = getSelectionStart();
-        if (selection == -1) {
-            return 0;
-        }
-        Layout layout = getLayout();
-        return layout.getLineForOffset(selection);
     }
 
 

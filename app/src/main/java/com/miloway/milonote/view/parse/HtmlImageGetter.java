@@ -53,16 +53,18 @@ public class HtmlImageGetter implements Html.ImageGetter {
         }
 
         if (view != null) {
-            if (bitmap.getWidth() > width) {
-                int height = bitmap.getHeight() * width / bitmap.getWidth();
-                bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+            int lineHeight = (int) (view.getPaint().getFontMetrics().bottom - view.getPaint().getFontMetrics().top);
+            int maxShowWidth = width - lineHeight;
+            if (bitmap.getWidth() > maxShowWidth) {
+                int h = bitmap.getHeight() * maxShowWidth / bitmap.getWidth();
+                bitmap = Bitmap.createScaledBitmap(bitmap, maxShowWidth, h, false);
             }
 
-            int lineHeight = (int) (view.getPaint().getFontMetrics().bottom - view.getPaint().getFontMetrics().top);
+
             int maxShowHeight = height - lineHeight * 4;
             if (bitmap.getHeight() > maxShowHeight) {
-                int width = bitmap.getWidth() * maxShowHeight / bitmap.getHeight();
-                bitmap = Bitmap.createScaledBitmap(bitmap, width, maxShowHeight, false);
+                int w = bitmap.getWidth() * maxShowHeight / bitmap.getHeight();
+                bitmap = Bitmap.createScaledBitmap(bitmap, w, maxShowHeight, false);
             }
         }
 
@@ -77,7 +79,7 @@ public class HtmlImageGetter implements Html.ImageGetter {
     }
 
 
-    class GlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+    private class GlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
         @Override
         public void onGlobalLayout() {
             if (view == null) {
